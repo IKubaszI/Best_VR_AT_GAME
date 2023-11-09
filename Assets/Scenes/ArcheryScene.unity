@@ -4805,6 +4805,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2776297941512862300, guid: 7901d8219f6a24ef0a60ce89da693f9c,
         type: 3}
+    - target: {fileID: 6168493624111215866, guid: 83b0842172a7b87418232af07a034c11,
+        type: 3}
+      propertyPath: m_TagString
+      value: Bullet
+      objectReference: {fileID: 0}
     - target: {fileID: 6168493624111573210, guid: 83b0842172a7b87418232af07a034c11,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -4839,6 +4844,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: pistolet
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168493624123774402, guid: 83b0842172a7b87418232af07a034c11,
+        type: 3}
+      propertyPath: m_TagString
+      value: Pistol
       objectReference: {fileID: 0}
     - target: {fileID: 6168493624123806564, guid: 83b0842172a7b87418232af07a034c11,
         type: 3}
@@ -12593,8 +12603,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1701807431}
-  m_LocalRotation: {x: 0, y: -0.7070389, z: 0, w: 0.7071747}
-  m_LocalPosition: {x: 1.953, y: 0.262, z: -6.021}
+  m_LocalRotation: {x: -0, y: -0.8191521, z: 0, w: -0.5735764}
+  m_LocalPosition: {x: 11.87, y: 0.262, z: -1.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12602,7 +12612,7 @@ Transform:
   - {fileID: 1260879370}
   m_Father: {fileID: 2006484414}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: -89.989, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -250, z: 0}
 --- !u!114 &1701807434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15003,9 +15013,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: targetA (11)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 336615671472136944, guid: 7fd0147ec4c090d43935a8d7f51b2e36, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fd0147ec4c090d43935a8d7f51b2e36, type: 3}
+--- !u!1 &1932265871 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 606455407165080763, guid: 7fd0147ec4c090d43935a8d7f51b2e36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1932265870}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1932265872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932265871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0767252b8ee568a4bb56b812a7684da4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreOnHit: 10
 --- !u!1 &1941231059
 GameObject:
   m_ObjectHideFlags: 0
