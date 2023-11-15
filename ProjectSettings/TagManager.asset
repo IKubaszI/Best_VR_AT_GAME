@@ -8,6 +8,13 @@ TagManager:
   - StickArrow
   - Can
   - Pin
+  - Balling
+  - Hammers
+  - Pistol
+  - Hammer
+  - Bow
+  - Bow2
+  - Bullet
   layers:
   - Default
   - TransparentFX

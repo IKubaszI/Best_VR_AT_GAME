@@ -11,7 +11,7 @@ public class target : MonoBehaviour
         if (collision.gameObject.CompareTag("Arrow") == true)
         {
         
-             Debug.Log("Strzała trafiła w cel!");
+            Debug.Log("Strzała trafiła w cel!");
             GetPoint getPointScript = FindObjectOfType<GetPoint>();
             if (getPointScript != null)
             {
