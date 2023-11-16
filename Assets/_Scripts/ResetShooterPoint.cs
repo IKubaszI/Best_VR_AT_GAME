@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class ResetShooterPoint : MonoBehaviour
 {
-    public target_strzelnica targetScript; 
+    [SerializeField]
+    private AudioSource audioSource;
 
+    public target_strzelnica targetScript; 
+    public DisappearManager disappearManager;
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
@@ -14,7 +17,9 @@ public class ResetShooterPoint : MonoBehaviour
             if (targetScript != null)
             {
                 targetScript.scoreShooter = 0;
+                disappearManager.ResetPosition();
                 targetScript.UpdateScoreText();
+                audioSource.Play();
             }
             else
             {

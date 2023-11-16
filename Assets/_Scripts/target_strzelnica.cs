@@ -7,11 +7,13 @@ public class target_strzelnica : MonoBehaviour
     public TMP_Text scoreText;
 
     public int scoreShooter = 0;
+    [SerializeField]
+    private AudioSource audioSource;
 
     void Start()
     {
         disappearManager = transform.parent.GetComponent<DisappearManager>();
-        scoreText.text = "Wynik: " + scoreShooter.ToString();
+        scoreText.text = "Twoj wynik: " + scoreShooter.ToString();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -21,6 +23,7 @@ public class target_strzelnica : MonoBehaviour
             Debug.Log("Trafiono w tarczę!");
             AddPoints(100); // Dodaj 100 pkt za trafienie
             disappearManager.DisappearAndMove();
+            audioSource.Play();
         }
     }
 
