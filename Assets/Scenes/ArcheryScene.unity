@@ -15168,6 +15168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   disappearManager: {fileID: 509298077}
   scoreOnHit_Shooter: 0
 --- !u!4 &1932265878 stripped
@@ -15176,6 +15177,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1932265870}
   m_PrefabAsset: {fileID: 0}
+=======
+  scoreOnHit: 10
+>>>>>>> parent of 5476d1b (Strzelnica_update1)
 =======
   scoreOnHit: 10
 >>>>>>> parent of 5476d1b (Strzelnica_update1)
