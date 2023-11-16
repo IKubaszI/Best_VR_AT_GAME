@@ -6,12 +6,12 @@ public class target_strzelnica : MonoBehaviour
     public DisappearManager disappearManager;
     public TMP_Text scoreText;
 
-    private int score = 0;
+    public int scoreShooter = 0;
 
     void Start()
     {
         disappearManager = transform.parent.GetComponent<DisappearManager>();
-        scoreText.text = "Wynik: " + score.ToString();
+        scoreText.text = "Wynik: " + scoreShooter.ToString();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -26,13 +26,12 @@ public class target_strzelnica : MonoBehaviour
 
     void AddPoints(int points)
     {
-        score += points;
+        scoreShooter += points;
         UpdateScoreText();
-
     }
 
-    void UpdateScoreText()
+    public void UpdateScoreText() // Zmiana na public
     {
-        scoreText.text = "Twoj wynik: " + score.ToString();
+        scoreText.text = "Twoj wynik: " + scoreShooter.ToString();
     }
 }
