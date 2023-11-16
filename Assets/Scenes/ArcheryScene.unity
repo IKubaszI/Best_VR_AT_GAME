@@ -15166,7 +15166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0767252b8ee568a4bb56b812a7684da4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
+  
   disappearManager: {fileID: 509298077}
   scoreOnHit_Shooter: 0
 --- !u!4 &1932265878 stripped
@@ -15175,9 +15175,8 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1932265870}
   m_PrefabAsset: {fileID: 0}
-=======
+
   scoreOnHit: 10
->>>>>>> parent of 5476d1b (Strzelnica_update1)
 --- !u!1 &1941231059
 GameObject:
   m_ObjectHideFlags: 0
