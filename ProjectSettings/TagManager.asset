@@ -15,6 +15,7 @@ TagManager:
   - Bow
   - Bow2
   - Bullet
+  - Fruit
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - UI
   - Arrow
   - Target
-  - 
+  - Sliceable
   - 
   - 
   - 
