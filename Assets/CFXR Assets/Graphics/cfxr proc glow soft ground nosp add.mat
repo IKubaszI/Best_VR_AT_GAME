@@ -2,52 +2,45 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: cfxr proc glow soft ground nosp add
-  m_Shader: {fileID: 4800000, guid: 714e760b98304b44292e04841e05f258, type: 3}
-  m_ShaderKeywords: __CFXRGLOW_POW_P4 __CFXRGLOW_POW_P6 _SUBGLOW_ON
+  m_Shader: {fileID: 4800000, guid: e198026df304af84a85675be636192ea, type: 3}
+  m_Parent: {fileID: 2100000, guid: 71ef950d76e4a6149b53e2136eaf4b2c, type: 2}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _ALPHABLEND_ON
+  m_InvalidKeywords:
+  - _
+  - _CFXR_DITHERED_SHADOWS_OFF
+  - _CFXR_OVERLAYBLEND_RGBA
+  - _CFXR_OVERLAYTEX_OFF
+  - _SUBGLOW_ON
+  - __CFXRGLOW_POW_P4
+  - __CFXRGLOW_POW_P6
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _DissolveTex:
+    - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _DitherCustom:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
-    - _DissolveSmooth: 0.1
     - _DstBlend: 1
     - _GlowMax: 1.5
-    - _GlowMid: 2
     - _GlowMin: 0.2
     - _Glow_Pow: 2
-    - _HdrBoost: 0
-    - _HdrMultiply: 2
-    - _InvertDissolveTex: 0
-    - _MaxValue: 2
-    - _RingTopOffset: 0.05
-    - _CFXR_DITHERED_SHADOWS: 0
-    - _ShadowStrength: 1
-    - _SoftParticlesFadeDistanceFar: 1
-    - _SoftParticlesFadeDistanceNear: 0
-    - _SrcBlend: 5
-    - _SubGlowMax: 6.7
-    - _SubGlowMin: -2.47
-    - _UseDissolve: 0
-    - _UseSG: 1
     - _UseSP: 0
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    m_Colors: []
+  m_BuildTextureStacks: []
