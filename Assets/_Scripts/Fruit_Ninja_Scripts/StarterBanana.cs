@@ -77,16 +77,5 @@ public class StarterBanana : MonoBehaviour
 
     bool aCollison = false;
 
-    public void OnCollisionEnter(Collision collision)
-    { 
-        bool aCollision = true;
-        Debug.Log("Col: " + aCollision);
-        StartGame startGame = FindObjectOfType<StartGame>();
-        if (startGame != null)
-        {
-            startGame.start();
-        }
-    }
-
 
 }
