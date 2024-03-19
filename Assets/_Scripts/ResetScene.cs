@@ -4,14 +4,14 @@ using UnityEngine.InputSystem; // Dodaj using do namespace Input System
 
 public class ResetScene : MonoBehaviour
 {
-    public float heightChangeAmount = 0.1f; // Iloœæ zmiany wysokoœci przy jednym naciœniêciu przycisku
+   private static float heightChangeAmount = 0.05f; // Iloï¿½ï¿½ zmiany wysokoï¿½ci przy jednym naciï¿½niï¿½ciu przycisku
 
     private void Update()
     {
-        // SprawdŸ, czy u¿ytkownik nacisn¹³ klawisz "R" na klawiaturze za pomoc¹ Input System
+        // Sprawdï¿½, czy uï¿½ytkownik nacisnï¿½ï¿½ klawisz "R" na klawiaturze za pomocï¿½ Input System
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
-            // Resetuj scenê
+            // Resetuj scenï¿½
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
@@ -20,7 +20,7 @@ public class ResetScene : MonoBehaviour
             AdjustHeight(heightChangeAmount);
         }
 
-        // Przy naciœniêciu przycisku "-" zmniejsz wysokoœæ XR Origin
+        // Przy naciï¿½niï¿½ciu przycisku "-" zmniejsz wysokoï¿½ï¿½ XR Origin
         if (Keyboard.current.mKey.wasPressedThisFrame)
         {
             AdjustHeight(-heightChangeAmount);
@@ -29,8 +29,8 @@ public class ResetScene : MonoBehaviour
 
     void AdjustHeight(float amount)
     {
-        // ZnajdŸ XR Rig (XR Origin) w scenie
-        GameObject xrRig = GameObject.Find("XR Origin"); // Zmieñ "XR Rig" na nazwê swojego obiektu XR Origin
+        // Znajdï¿½ XR Rig (XR Origin) w scenie
+        GameObject xrRig = GameObject.Find("XR Origin"); // Zmieï¿½ "XR Rig" na nazwï¿½ swojego obiektu XR Origin
 
         if (xrRig != null)
         {
@@ -39,7 +39,7 @@ public class ResetScene : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Nie mo¿na znaleŸæ obiektu XR Rig w scenie.");
+            Debug.LogError("Nie moï¿½na znaleï¿½ï¿½ obiektu XR Rig w scenie.");
         }
     }
 }
