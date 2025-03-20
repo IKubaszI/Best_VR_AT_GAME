@@ -96,19 +96,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 30a1335945d8410449b953446b68163c, type: 3}
---- !u!82 &1248018750503080221 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5862481684017481539, guid: 30a1335945d8410449b953446b68163c,
-    type: 3}
-  m_PrefabInstance: {fileID: 4614609031952848478}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1502039544669574930 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6112004230024085836, guid: 30a1335945d8410449b953446b68163c,
     type: 3}
   m_PrefabInstance: {fileID: 4614609031952848478}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3565764393587589513
+--- !u!114 &8217129952239097981
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,10 +111,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1502039544669574930}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c783fae4051477d4589e569ac707aa0c, type: 3}
+  m_Script: {fileID: 11500000, guid: 869dc788aec62a442b55679e01b6c388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  splashEffectPrefab: {fileID: 1502039544669574930}
-  splashSound: {fileID: 1248018750503080221}
-  crossSectionMaterial: {fileID: 2100000, guid: fd84161baee1c8447a56f61f2c071246,
-    type: 2}
+  splashEffectPrefab: {fileID: 8234938262557852742}
+--- !u!1 &8234938262557852742 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3621460138471412248, guid: 30a1335945d8410449b953446b68163c,
+    type: 3}
+  m_PrefabInstance: {fileID: 4614609031952848478}
+  m_PrefabAsset: {fileID: 0}

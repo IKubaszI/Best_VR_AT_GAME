@@ -1,47 +1,52 @@
 using UnityEngine;
 
-public class BananaSplash : MonoBehaviour
+public class BananaGroundHandler : MonoBehaviour
 {
     public GameObject splashEffectPrefab; // Prefab efektu rozprysku
     private bool hasSplashed = false; // Flaga zapobiegająca ponownemu uruchomieniu
 
     void OnTriggerEnter(Collider other)
     {
-        if (!hasSplashed && other.CompareTag("Ground")) // Jeśli pierwszy raz dotyka podłogi
+        if (!hasSplashed && other.CompareTag("Ground"))
         {
-            Debug.Log("Wykonał się.");
-            hasSplashed = true; // Ustawiamy flagę, żeby nie odtworzyło się drugi raz
-            Splash();
+            HandleBananaHit();
         }
     }
 
-    void Splash()
+    void OnCollisionEnter(Collision collision)
     {
-        // Sprawdzamy, czy mamy prefab efektu
+        if (!hasSplashed && collision.gameObject.CompareTag("Ground"))
+        {
+            HandleBananaHit();
+        }
+    }
+
+    void HandleBananaHit()
+    {
+        hasSplashed = true;
+        Debug.Log("Banana uderzył o ziemię!");
+
+        // Efekt rozprysku
         if (splashEffectPrefab != null)
         {
-            Debug.Log("splash!.");
-            // Tworzymy efekt w miejscu upadku
             GameObject splashEffect = Instantiate(splashEffectPrefab, transform.position, Quaternion.identity);
-
-            // Pobieramy AudioSource z prefaba i odtwarzamy dźwięk
             AudioSource splashAudio = splashEffect.GetComponent<AudioSource>();
+
             if (splashAudio != null)
             {
                 splashAudio.Play();
             }
 
-            // Zniszcz efekt po zakończeniu animacji i dźwięku
-            Destroy(splashEffect, 2f);
+            Destroy(splashEffect, 2f); // Usuń efekt po 2 sekundach
         }
 
-        // Wyłączenie renderowania i kolizji obiektu banana
+        // Wyłączenie renderowania i kolizji banana
         MeshRenderer mesh = GetComponent<MeshRenderer>();
         Collider collider = GetComponent<Collider>();
 
         if (mesh != null) mesh.enabled = false;
         if (collider != null) collider.enabled = false;
 
-        Destroy(gameObject, 2); // Usunięcie banana po 2 sekundach
+        Destroy(gameObject, 2); // Usuń banana po 2 sekundach
     }
 }
