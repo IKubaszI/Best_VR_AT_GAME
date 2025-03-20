@@ -68,6 +68,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3621460138471412248, guid: 30a1335945d8410449b953446b68163c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3647148563127914272, guid: 30a1335945d8410449b953446b68163c,
         type: 3}
       propertyPath: m_Layer
@@ -78,6 +83,11 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: e91bea0322df7c1489744cd2935a6ea8, type: 3}
+    - target: {fileID: 5862481684017481539, guid: 30a1335945d8410449b953446b68163c,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6112004230024085836, guid: 30a1335945d8410449b953446b68163c,
         type: 3}
       propertyPath: m_Name

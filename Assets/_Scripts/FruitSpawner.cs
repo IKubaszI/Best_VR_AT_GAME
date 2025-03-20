@@ -24,7 +24,8 @@ public class FruitSpawner : MonoBehaviour
 
             if (rb != null)
             {
-                rb.velocity = Vector3.up * launchForce; // Nadaj siłę w górę
+                rb.velocity = new Vector3(0f, 1f, 1f).normalized * launchForce; // W przód i do góry
+
             }
         }
     }

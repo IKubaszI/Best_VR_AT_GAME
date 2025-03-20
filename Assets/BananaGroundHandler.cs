@@ -4,6 +4,15 @@ public class BananaGroundHandler : MonoBehaviour
 {
     public GameObject splashEffectPrefab; // Prefab efektu rozprysku
     private bool hasSplashed = false; // Flaga zapobiegająca ponownemu uruchomieniu
+    private ParticleSystem bananaParticles; // System cząsteczek
+    private AudioSource bananaAudio; // Źródło dźwięku
+
+    void Start()
+    {
+        // Uzyskanie dostępu do systemu cząsteczek i audio z obiektu banana
+        bananaParticles = GetComponent<ParticleSystem>();
+        bananaAudio = GetComponent<AudioSource>();
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -26,18 +35,16 @@ public class BananaGroundHandler : MonoBehaviour
         hasSplashed = true;
         Debug.Log("Banana uderzył o ziemię!");
 
-        // Efekt rozprysku
-        if (splashEffectPrefab != null)
+        // Odpalamy system cząsteczek (jeśli jest przypisany)
+        if (bananaParticles != null)
         {
-            GameObject splashEffect = Instantiate(splashEffectPrefab, transform.position, Quaternion.identity);
-            AudioSource splashAudio = splashEffect.GetComponent<AudioSource>();
+            bananaParticles.Play();
+        }
 
-            if (splashAudio != null)
-            {
-                splashAudio.Play();
-            }
-
-            Destroy(splashEffect, 2f); // Usuń efekt po 2 sekundach
+        // Odtwarzanie dźwięku (jeśli jest przypisany)
+        if (bananaAudio != null)
+        {
+            bananaAudio.Play();
         }
 
         // Wyłączenie renderowania i kolizji banana
