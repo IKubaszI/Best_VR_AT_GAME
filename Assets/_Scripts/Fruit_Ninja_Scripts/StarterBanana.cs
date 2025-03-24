@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class StarterBanana : MonoBehaviour
 {
@@ -12,13 +11,24 @@ public class StarterBanana : MonoBehaviour
 
     private bool movingUp = true;
     private bool stopMoving = false;
+    public static bool wasDestroyed = false;
 
-    public event System.Action OnCollision;
+    // Dodatkowe pola
+    public TMP_Text scoreText;
+    private int scoreShooter = 0;
+    public ParticleSystem particle;
+    public AudioSource audioSource;
+
+    void Awake()
+    {
+        wasDestroyed = false;  // Reset flagi przy starcie gry
+    }
 
     void Start()
     {
         startPosition = transform.position;
         transform.position = new Vector3(startPosition.x, initialHeight, startPosition.z);
+        UpdateScoreText();
     }
 
     void Update()
@@ -39,36 +49,21 @@ public class StarterBanana : MonoBehaviour
         {
             newY += Time.deltaTime * speed;
             if (newY >= maxHeight)
-            {
-                newY = maxHeight;
                 movingUp = false;
-                OnCollision?.Invoke();
-            }
         }
         else
         {
             newY -= Time.deltaTime * speed;
             if (newY <= minHeight)
-            {
-                newY = minHeight;
                 movingUp = true;
-            }
         }
 
         transform.position = new Vector3(startPosition.x, newY, startPosition.z);
     }
 
-    public void StopMoving()
-    {
-        stopMoving = true;
-    }
+    public void StopMoving() => stopMoving = true;
+    public void ResumeMoving() => stopMoving = false;
 
-    public void ResumeMoving()
-    {
-        stopMoving = false;
-    }
-
-    // NOWA FUNKCJA – reakcja na cięcie
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Katana"))
@@ -76,26 +71,34 @@ public class StarterBanana : MonoBehaviour
             Debug.Log("Banan przecięty!");
 
             // Wyłącz render i kolizję
-            MeshRenderer mesh = GetComponent<MeshRenderer>();
-            Collider collider = GetComponent<Collider>();
-            if (mesh != null) mesh.enabled = false;
-            if (collider != null) collider.enabled = false;
+            if (TryGetComponent(out MeshRenderer mesh)) mesh.enabled = false;
+            if (TryGetComponent(out Collider collider)) collider.enabled = false;
 
-            // Cząsteczki (jeśli są childem)
-            ParticleSystem particle = GetComponentInChildren<ParticleSystem>();
-            if (particle != null)
-            {
-                particle.Play();
-            }
+            // Cząsteczki
+            if (particle != null) particle.Play();
 
             // Dźwięk
-            AudioSource audio = GetComponent<AudioSource>();
-            if (audio != null)
-            {
-                audio.Play();
-            }
+            if (audioSource != null) audioSource.Play();
+
+            // Punkty
+            AddPoints(10);
+
+            // Flaga informująca spawner
+            wasDestroyed = true;
 
             Destroy(gameObject, 2f);
         }
+    }
+
+    void AddPoints(int points)
+    {
+        scoreShooter += points;
+        UpdateScoreText();
+    }
+
+    void UpdateScoreText()
+    {
+        if (scoreText != null)
+            scoreText.text = "Twoj wynik: " + scoreShooter;
     }
 }

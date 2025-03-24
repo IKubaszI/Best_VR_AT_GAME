@@ -3,33 +3,31 @@ using UnityEngine;
 
 public class FruitSpawner : MonoBehaviour
 {
-    public GameObject fruitPrefab;     // Prefab banana
-    public Transform spawnPoint;       // Miejsce spawnu
-    public float launchForce = 5f;     // Siła wyrzutu
+    public GameObject fruitPrefab;
+    public Transform spawnPoint;
+    public float launchForce = 5f;
 
-    private bool canSpawn = false;
+    private bool hasStarted = false;
 
     void Start()
     {
-        StartCoroutine(WaitForStartingBanana());
+        StartCoroutine(WaitForStarterBananaToBeCut());
     }
 
-    IEnumerator WaitForStartingBanana()
+    IEnumerator WaitForStarterBananaToBeCut()
     {
-        // Czekaj aż StartingBanana zniknie z hierarchii
-        while (GameObject.FindGameObjectWithTag("StartingBanana") != null)
+        while (!StarterBanana.wasDestroyed)
         {
             yield return null;
         }
 
-        Debug.Log("StartingBanana zniszczony – zaczynamy spawn!");
-        canSpawn = true;
+        Debug.Log("Banana przecięty! Zaczynamy spawn.");
         StartCoroutine(SpawnFruits());
     }
 
     IEnumerator SpawnFruits()
     {
-        while (canSpawn)
+        while (true)
         {
             yield return new WaitForSeconds(2f);
 

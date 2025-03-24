@@ -10582,6 +10582,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!82 &943012385 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4148537059332632241, guid: 136779be9fbdbc848972f60e88e575f5,
+    type: 3}
+  m_PrefabInstance: {fileID: 4148537058394477712}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &943012392 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4148537059332632248, guid: 136779be9fbdbc848972f60e88e575f5,
+    type: 3}
+  m_PrefabInstance: {fileID: 4148537058394477712}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &955938936
 GameObject:
   m_ObjectHideFlags: 0
@@ -35579,6 +35591,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 130.957
       objectReference: {fileID: 0}
+    - target: {fileID: 4148537059330244710, guid: 136779be9fbdbc848972f60e88e575f5,
+        type: 3}
+      propertyPath: particle
+      value: 
+      objectReference: {fileID: 943012392}
+    - target: {fileID: 4148537059330244710, guid: 136779be9fbdbc848972f60e88e575f5,
+        type: 3}
+      propertyPath: scoreText
+      value: 
+      objectReference: {fileID: 1665890604}
+    - target: {fileID: 4148537059330244710, guid: 136779be9fbdbc848972f60e88e575f5,
+        type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 943012385}
     - target: {fileID: 4148537059330244711, guid: 136779be9fbdbc848972f60e88e575f5,
         type: 3}
       propertyPath: scoreText
@@ -35589,7 +35616,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartingBanana
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4148537059332632241, guid: 136779be9fbdbc848972f60e88e575f5,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e91bea0322df7c1489744cd2935a6ea8, type: 3}
+    m_RemovedComponents:
+    - {fileID: 4148537059330244711, guid: 136779be9fbdbc848972f60e88e575f5, type: 3}
+    - {fileID: 4148537059332632240, guid: 136779be9fbdbc848972f60e88e575f5, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 136779be9fbdbc848972f60e88e575f5, type: 3}
 --- !u!1001 &5943627355868206747
