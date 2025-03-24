@@ -11,21 +11,16 @@ public class StarterBanana : MonoBehaviour
     [SerializeField] private float speed = 0.1f;
 
     private bool movingUp = true;
-    private bool rotation = true;
     private bool stopMoving = false;
-
-    
 
     public event System.Action OnCollision;
 
-    // Start is called before the first frame update
     void Start()
     {
         startPosition = transform.position;
         transform.position = new Vector3(startPosition.x, initialHeight, startPosition.z);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!stopMoving)
@@ -34,8 +29,6 @@ public class StarterBanana : MonoBehaviour
         }
 
         transform.Rotate(Vector3.forward * Time.deltaTime * 20);
-
-
     }
 
     private void MoveUpDown()
@@ -75,7 +68,34 @@ public class StarterBanana : MonoBehaviour
         stopMoving = false;
     }
 
-    bool aCollison = false;
+    // NOWA FUNKCJA – reakcja na cięcie
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Katana"))
+        {
+            Debug.Log("Banan przecięty!");
 
+            // Wyłącz render i kolizję
+            MeshRenderer mesh = GetComponent<MeshRenderer>();
+            Collider collider = GetComponent<Collider>();
+            if (mesh != null) mesh.enabled = false;
+            if (collider != null) collider.enabled = false;
 
+            // Cząsteczki (jeśli są childem)
+            ParticleSystem particle = GetComponentInChildren<ParticleSystem>();
+            if (particle != null)
+            {
+                particle.Play();
+            }
+
+            // Dźwięk
+            AudioSource audio = GetComponent<AudioSource>();
+            if (audio != null)
+            {
+                audio.Play();
+            }
+
+            Destroy(gameObject, 2f);
+        }
+    }
 }
