@@ -81,7 +81,7 @@ public class StarterBanana : MonoBehaviour
             if (audioSource != null) audioSource.Play();
 
             // Punkty
-            AddPoints(10);
+            AddPoints(0);
 
             // Flaga informująca spawner
             wasDestroyed = true;
