@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 
 public class StarterBanana : MonoBehaviour
 {
@@ -13,22 +12,21 @@ public class StarterBanana : MonoBehaviour
     private bool stopMoving = false;
     public static bool wasDestroyed = false;
 
-    // Dodatkowe pola
-    public TMP_Text scoreText;
-    private int scoreShooter = 0;
     public ParticleSystem particle;
     public AudioSource audioSource;
 
     void Awake()
     {
-        wasDestroyed = false;  // Reset flagi przy starcie gry
+        wasDestroyed = false;
     }
 
     void Start()
     {
         startPosition = transform.position;
         transform.position = new Vector3(startPosition.x, initialHeight, startPosition.z);
-        UpdateScoreText();
+
+        // Wyzeruj wynik na starcie (opcjonalnie)
+        FruitScoreManager.Instance.AddPoints(0);
     }
 
     void Update()
@@ -48,14 +46,12 @@ public class StarterBanana : MonoBehaviour
         if (movingUp)
         {
             newY += Time.deltaTime * speed;
-            if (newY >= maxHeight)
-                movingUp = false;
+            if (newY >= maxHeight) movingUp = false;
         }
         else
         {
             newY -= Time.deltaTime * speed;
-            if (newY <= minHeight)
-                movingUp = true;
+            if (newY <= minHeight) movingUp = true;
         }
 
         transform.position = new Vector3(startPosition.x, newY, startPosition.z);
@@ -68,56 +64,32 @@ public class StarterBanana : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Katana"))
         {
-            Debug.Log("Banan przecięty!");
+            HandleCut();
+        }
+    }
 
-            // Wyłącz render i kolizję
+    public void OnCutBySword()
+    {
+        HandleCut();
+    }
+
+    private void HandleCut()
+    {
+        if (!wasDestroyed)
+        {
+            Debug.Log("StarterBanana przecięty!");
+
+            wasDestroyed = true;
+
             if (TryGetComponent(out MeshRenderer mesh)) mesh.enabled = false;
             if (TryGetComponent(out Collider collider)) collider.enabled = false;
 
-            // Cząsteczki
             if (particle != null) particle.Play();
-
-            // Dźwięk
             if (audioSource != null) audioSource.Play();
 
-            // Punkty
-            AddPoints(0);
-
-            // Flaga informująca spawner
-            wasDestroyed = true;
+            FruitScoreManager.Instance.AddPoints(0); // lub 10, jeśli chcesz
 
             Destroy(gameObject, 2f);
         }
     }
-
-    void AddPoints(int points)
-    {
-        scoreShooter += points;
-        UpdateScoreText();
-    }
-
-    void UpdateScoreText()
-    {
-        if (scoreText != null)
-            scoreText.text = "Twoj wynik: " + scoreShooter;
-    }
-    public void OnCutBySword()
-{
-    if (!wasDestroyed)
-    {
-        Debug.Log("OnCutBySword: StarterBanana przecięty przez miecz!");
-
-        wasDestroyed = true;
-
-        // Efekty
-        if (particle != null) particle.Play();
-        if (audioSource != null) audioSource.Play();
-
-        AddPoints(0); // Dodaj punkty (lub zostaw 0)
-
-        // Znikanie obiektu
-        Destroy(gameObject, 2f);
-    }
-}
-
 }

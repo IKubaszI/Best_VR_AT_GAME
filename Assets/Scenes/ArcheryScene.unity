@@ -1611,7 +1611,6 @@ Transform:
   - {fileID: 464777870}
   - {fileID: 1396384792}
   - {fileID: 486851897}
-  - {fileID: 1665890601}
   - {fileID: 257761436}
   - {fileID: 2026321034}
   - {fileID: 1093883953}
@@ -20916,6 +20915,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 986124379}
+  - {fileID: 1665890601}
   m_Father: {fileID: 80235825}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 89.736, z: 0}
@@ -23335,6 +23335,7 @@ GameObject:
   - component: {fileID: 1665890604}
   - component: {fileID: 1665890603}
   - component: {fileID: 1665890602}
+  - component: {fileID: 1665890606}
   m_Layer: 0
   m_Name: "Tablica_Wynik\xF3w_Ninja_Tekst"
   m_TagString: Untagged
@@ -23349,17 +23350,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1665890600}
-  m_LocalRotation: {x: 0.000000059604645, y: 0.9999974, z: -0.00000008940697, w: 0.0023040548}
-  m_LocalPosition: {x: 0, y: 0, z: -6.3848095}
-  m_LocalScale: {x: 0.19742785, y: 0.17574482, z: 0.41129565}
+  m_LocalRotation: {x: 0.00000004567946, y: 0.7071068, z: -0.000000036079935, w: 0.70710677}
+  m_LocalPosition: {x: 0, y: 0, z: -0.015564943}
+  m_LocalScale: {x: 0.03500774, y: 0.19549075, z: 2.0201159}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 80235825}
+  m_Father: {fileID: 1396384792}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -8.217716, y: 2.7258997}
+  m_AnchoredPosition: {x: -1, y: 0.012124062}
   m_SizeDelta: {x: 27.5, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1665890602
@@ -23604,6 +23605,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1665890606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665890600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126c9d0b465e0b644b11597be879c6f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 1665890604}
 --- !u!1001 &1672599610
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 
 public class FlyingBanana : MonoBehaviour
 {
@@ -11,9 +10,6 @@ public class FlyingBanana : MonoBehaviour
 
     [Header("Opcje punktacji")]
     public bool disablePoints = false;
-    public static TMP_Text scoreText;
-
-    private int scoreShooter = 0;
 
     public void OnSliced()
     {
@@ -23,6 +19,7 @@ public class FlyingBanana : MonoBehaviour
 
             Debug.Log("FlyingBanana: przecięty");
 
+            // Efekt cząsteczek
             if (cutEffect != null)
             {
                 cutEffect.transform.SetParent(null);
@@ -30,25 +27,19 @@ public class FlyingBanana : MonoBehaviour
                 cutEffect.Play();
             }
 
+            // Dźwięk
             if (cutSound != null)
                 cutSound.Play();
 
-            if (!disablePoints)
-                AddPoints(10);
+            // Punkty
+            if (!disablePoints && FruitScoreManager.Instance != null)
+            {
+                FruitScoreManager.Instance.AddPoints(10);
+            }
         }
         else
         {
             Debug.Log("FlyingBanana: już wcześniej przecięty");
         }
-    }
-
-    private void AddPoints(int points)
-    {
-        scoreShooter += points;
-
-        if (scoreText != null)
-            scoreText.text = "Twoj wynik: " + scoreShooter.ToString();
-        else
-            Debug.LogWarning("FlyingBanana: Brak przypisanego scoreText!");
     }
 }
