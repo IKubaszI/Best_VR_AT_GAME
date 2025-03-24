@@ -101,4 +101,23 @@ public class StarterBanana : MonoBehaviour
         if (scoreText != null)
             scoreText.text = "Twoj wynik: " + scoreShooter;
     }
+    public void OnCutBySword()
+{
+    if (!wasDestroyed)
+    {
+        Debug.Log("OnCutBySword: StarterBanana przecięty przez miecz!");
+
+        wasDestroyed = true;
+
+        // Efekty
+        if (particle != null) particle.Play();
+        if (audioSource != null) audioSource.Play();
+
+        AddPoints(0); // Dodaj punkty (lub zostaw 0)
+
+        // Znikanie obiektu
+        Destroy(gameObject, 2f);
+    }
+}
+
 }

@@ -28739,6 +28739,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 7699870440097222275, guid: 38b7578b94af2834f95d15d4c8248c33,
+        type: 3}
+      propertyPath: crossSectionMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: fd84161baee1c8447a56f61f2c071246, type: 2}
     - target: {fileID: 7699870440097222276, guid: 38b7578b94af2834f95d15d4c8248c33,
         type: 3}
       propertyPath: m_InteractionManager
@@ -35616,11 +35621,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartingBanana
       objectReference: {fileID: 0}
+    - target: {fileID: 4148537059332632205, guid: 136779be9fbdbc848972f60e88e575f5,
+        type: 3}
+      propertyPath: m_TagString
+      value: StartingBanana
+      objectReference: {fileID: 0}
     - target: {fileID: 4148537059332632241, guid: 136779be9fbdbc848972f60e88e575f5,
         type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: e91bea0322df7c1489744cd2935a6ea8, type: 3}
+      objectReference: {fileID: 8300000, guid: 4eb7c76586f55214595478557cf00925, type: 3}
     m_RemovedComponents:
     - {fileID: 4148537059330244711, guid: 136779be9fbdbc848972f60e88e575f5, type: 3}
     - {fileID: 4148537059332632240, guid: 136779be9fbdbc848972f60e88e575f5, type: 3}
