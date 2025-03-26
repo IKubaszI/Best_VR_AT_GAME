@@ -2,23 +2,17 @@ using UnityEngine;
 
 public class BananaGroundHandler : MonoBehaviour
 {
-    public GameObject splashEffectPrefab; // Prefab efektu rozprysku
-    private bool hasSplashed = false; // Flaga zapobiegająca ponownemu uruchomieniu
-    private ParticleSystem bananaParticles; // System cząsteczek
-    private AudioSource bananaAudio; // Źródło dźwięku
+    [Header("Efekty upadku")]
+    public ParticleSystem groundEffect;
+    public AudioSource groundSound;
 
-    void Start()
-    {
-        // Uzyskanie dostępu do systemu cząsteczek i audio z obiektu banana
-        bananaParticles = GetComponent<ParticleSystem>();
-        bananaAudio = GetComponent<AudioSource>();
-    }
+    private bool hasSplashed = false;
 
     void OnTriggerEnter(Collider other)
     {
         if (!hasSplashed && other.CompareTag("Ground"))
         {
-            HandleBananaHit();
+            HandleGroundImpact();
         }
     }
 
@@ -26,34 +20,31 @@ public class BananaGroundHandler : MonoBehaviour
     {
         if (!hasSplashed && collision.gameObject.CompareTag("Ground"))
         {
-            HandleBananaHit();
+            HandleGroundImpact();
         }
     }
 
-    void HandleBananaHit()
+    void HandleGroundImpact()
     {
         hasSplashed = true;
-        Debug.Log("Banana uderzył o ziemię!");
+        Debug.Log("FlyingBanana: uderzył o ziemię!");
 
-        // Odpalamy system cząsteczek (jeśli jest przypisany)
-        if (bananaParticles != null)
+        // Odpal cząsteczki
+        if (groundEffect != null)
         {
-            bananaParticles.Play();
+            groundEffect.transform.SetParent(null);
+            groundEffect.transform.position = transform.position;
+            groundEffect.Play();
         }
 
-        // Odtwarzanie dźwięku (jeśli jest przypisany)
-        if (bananaAudio != null)
-        {
-            bananaAudio.Play();
-        }
+        // Odpal dźwięk
+        if (groundSound != null)
+            groundSound.Play();
 
-        // Wyłączenie renderowania i kolizji banana
-        MeshRenderer mesh = GetComponent<MeshRenderer>();
-        Collider collider = GetComponent<Collider>();
+        // Wyłącz render i kolizję
+        if (TryGetComponent(out MeshRenderer mesh)) mesh.enabled = false;
+        if (TryGetComponent(out Collider col)) col.enabled = false;
 
-        if (mesh != null) mesh.enabled = false;
-        if (collider != null) collider.enabled = false;
-
-        Destroy(gameObject, 2); // Usuń banana po 2 sekundach
+        Destroy(gameObject, 2f);
     }
 }
