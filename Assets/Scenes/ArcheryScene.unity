@@ -3290,6 +3290,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -89.76999
       objectReference: {fileID: 0}
+    - target: {fileID: 7699870440097222275, guid: 38b7578b94af2834f95d15d4c8248c33,
+        type: 3}
+      propertyPath: neonCutEffect
+      value: 
+      objectReference: {fileID: 4561884547076367926, guid: c3a9a4e19f7ffec498963851ab11e83e,
+        type: 3}
     - target: {fileID: 7699870440097222276, guid: 38b7578b94af2834f95d15d4c8248c33,
         type: 3}
       propertyPath: m_InteractionManager
@@ -23762,7 +23768,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 6047e89cbc632764c8e6593dc7ed527d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
