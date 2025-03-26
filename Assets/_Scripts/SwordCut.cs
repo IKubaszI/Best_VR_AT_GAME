@@ -118,11 +118,28 @@ public class SwordCut : MonoBehaviour
         Destroy(slicedObject, 2f);
     }
 
-    void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider collision)
     {
-        if (other.CompareTag("Bomb"))
+        if (collision.gameObject.CompareTag("Bomb"))
         {
-            Explode(other.gameObject);
+            Debug.Log(" Bomba przecięta");
+
+            // Efekty – cząsteczki, dźwięki
+            AudioSource audio = collision.GetComponent<AudioSource>();
+            if (audio != null) audio.Play();
+
+            // Odejmujemy życie
+            LivesManager.Instance?.LoseLife();
+
+            // Resetujemy mnożnik (placeholder)
+            ComboManager.Instance?.ResetCombo();
+
+            // Dezaktywujemy render i kolizję
+            if (collision.TryGetComponent(out MeshRenderer mesh)) mesh.enabled = false;
+            if (collision.TryGetComponent(out Collider col)) col.enabled = false;
+
+            Destroy(collision.gameObject, 2f);
         }
     }
+
 }
