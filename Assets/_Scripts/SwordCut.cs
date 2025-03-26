@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using EzySlice;
-using UnityEngine.InputSystem;
 
 public class SwordCut : MonoBehaviour
 {
@@ -22,20 +20,17 @@ public class SwordCut : MonoBehaviour
         {
             GameObject target = hit.transform.gameObject;
 
-            // ➕ sprawdzamy czy to StartingBanana
             if (target.CompareTag("StartingBanana"))
             {
                 StarterBanana starter = target.GetComponent<StarterBanana>();
                 if (starter != null)
                 {
                     Debug.Log("StarterBanana przecięty przez miecz!");
-                    // symulujemy uderzenie
                     starter.OnCutBySword();
                     return;
                 }
             }
 
-            // Inne banany – slice normalnie
             Slice(target);
         }
     }
@@ -48,8 +43,7 @@ public class SwordCut : MonoBehaviour
         Transform animation = target.transform.childCount > 0 ? target.transform.GetChild(0) : null;
 
         Vector3 velocity = velocityEstimator.GetVelocityEstimate();
-        Vector3 planeNormal = Vector3.Cross(endSlicePoint.position - startSlicePoint.position, velocity);
-        planeNormal.Normalize();
+        Vector3 planeNormal = Vector3.Cross(endSlicePoint.position - startSlicePoint.position, velocity).normalized;
 
         SlicedHull hull = target.Slice(endSlicePoint.position, planeNormal);
 
@@ -66,17 +60,15 @@ public class SwordCut : MonoBehaviour
             audioData = target.GetComponent<AudioSource>();
             if (audioData != null) audioData.Play();
 
-            // Wyłączenie oryginalnego obiektu
             if (mesh != null) mesh.enabled = false;
             if (boxCollider != null) boxCollider.enabled = false;
             if (meshCollider != null) meshCollider.enabled = false;
             if (animation != null) animation.gameObject.SetActive(true);
 
-            // Poinformuj FlyingBanana (jeśli ma)
             FlyingBanana fb = target.GetComponent<FlyingBanana>();
             if (fb != null)
             {
-                fb.OnSliced();
+                fb.OnSliced(); // tu odpalany jest particle i punkty
             }
 
             Destroy(target, 3f);
@@ -126,12 +118,11 @@ public class SwordCut : MonoBehaviour
         Destroy(slicedObject, 2f);
     }
 
-    public void OnTriggerEnter(Collider collision)
+    void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Bomb"))
+        if (other.CompareTag("Bomb"))
         {
-            Explode(collision.gameObject);
+            Explode(other.gameObject);
         }
     }
-    
 }
