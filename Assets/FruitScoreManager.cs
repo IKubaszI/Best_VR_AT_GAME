@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class FruitScoreManager : MonoBehaviour{
+public class FruitScoreManager : MonoBehaviour
+{
     public static FruitScoreManager Instance;
 
     [Header("UI")]
@@ -13,15 +14,10 @@ public class FruitScoreManager : MonoBehaviour{
 
     void Awake()
     {
-        // Singleton — tylko jedna instancja
         if (Instance == null)
-        {
             Instance = this;
-        }
         else
-        {
             Destroy(gameObject);
-        }
     }
 
     public void AddPoints(int amount)
@@ -30,16 +26,17 @@ public class FruitScoreManager : MonoBehaviour{
         UpdateScoreDisplay();
     }
 
-    public int GetScore()
+    public void ResetScore()
     {
-        return score;
+        score = 0;
+        UpdateScoreDisplay();
     }
+
+    public int GetScore() => score;
 
     private void UpdateScoreDisplay()
     {
         if (scoreText != null)
-        {
-            scoreText.text = "Twoj wynik: " + score.ToString();
-        }
+            scoreText.text = "Twój wynik: " + score.ToString();
     }
 }
