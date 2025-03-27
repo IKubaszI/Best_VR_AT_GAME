@@ -7,7 +7,7 @@ public class FruitSpawner : MonoBehaviour
     public Transform spawnPoint;
     public float launchForce = 5f;
 
-    private Coroutine spawnRoutine;
+    private bool hasStarted = false;
 
     void Start()
     {
@@ -17,15 +17,17 @@ public class FruitSpawner : MonoBehaviour
     IEnumerator WaitForStarterBananaToBeCut()
     {
         while (!StarterBanana.wasDestroyed)
+        {
             yield return null;
+        }
 
         Debug.Log("Banana przecięty! Zaczynamy spawn.");
-        spawnRoutine = StartCoroutine(SpawnFruits());
+        StartCoroutine(SpawnFruits());
     }
 
     IEnumerator SpawnFruits()
     {
-        while (!LivesManager.Instance.IsGameOver)
+        while (true)
         {
             yield return new WaitForSeconds(2f);
 
@@ -33,13 +35,9 @@ public class FruitSpawner : MonoBehaviour
             Rigidbody rb = fruit.GetComponent<Rigidbody>();
 
             if (rb != null)
+            {
                 rb.velocity = new Vector3(0f, 1f, 1f).normalized * launchForce;
+            }
         }
-    }
-
-    public void StopSpawning()
-    {
-        if (spawnRoutine != null)
-            StopCoroutine(spawnRoutine);
     }
 }

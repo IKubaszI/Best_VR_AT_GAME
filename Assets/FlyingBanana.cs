@@ -13,23 +13,33 @@ public class FlyingBanana : MonoBehaviour
 
     public void OnSliced()
     {
-        if (hasBeenHit) return;
-
-        hasBeenHit = true;
-
-        Debug.Log("FlyingBanana: przecięty");
-
-        if (cutEffect != null)
+        if (!hasBeenHit)
         {
-            cutEffect.transform.SetParent(null);
-            cutEffect.transform.position = transform.position;
-            cutEffect.Play();
+            hasBeenHit = true;
+
+            Debug.Log("FlyingBanana: przecięty");
+
+            // Efekt cząsteczek
+            if (cutEffect != null)
+            {
+                cutEffect.transform.SetParent(null);
+                cutEffect.transform.position = transform.position;
+                cutEffect.Play();
+            }
+
+            // Dźwięk
+            if (cutSound != null)
+                cutSound.Play();
+
+            // Punkty
+            if (!disablePoints && FruitScoreManager.Instance != null)
+            {
+                FruitScoreManager.Instance.AddPoints(10);
+            }
         }
-
-        if (cutSound != null)
-            cutSound.Play();
-
-        if (!disablePoints && FruitScoreManager.Instance != null)
-            FruitScoreManager.Instance.AddPoints(10);
+        else
+        {
+            Debug.Log("FlyingBanana: już wcześniej przecięty");
+        }
     }
 }

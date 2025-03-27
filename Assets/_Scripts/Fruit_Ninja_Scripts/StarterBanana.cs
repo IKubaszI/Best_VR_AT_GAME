@@ -15,18 +15,26 @@ public class StarterBanana : MonoBehaviour
     public ParticleSystem particle;
     public AudioSource audioSource;
 
-    void Awake() => wasDestroyed = false;
+    void Awake()
+    {
+        wasDestroyed = false;
+    }
 
     void Start()
     {
         startPosition = transform.position;
         transform.position = new Vector3(startPosition.x, initialHeight, startPosition.z);
+
+        // Wyzeruj wynik na starcie (opcjonalnie)
+        FruitScoreManager.Instance.AddPoints(0);
     }
 
     void Update()
     {
         if (!stopMoving)
+        {
             MoveUpDown();
+        }
 
         transform.Rotate(Vector3.forward * Time.deltaTime * 20);
     }
@@ -55,28 +63,33 @@ public class StarterBanana : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Katana"))
+        {
             HandleCut();
+        }
     }
 
-    public void OnCutBySword() => HandleCut();
+    public void OnCutBySword()
+    {
+        HandleCut();
+    }
 
     private void HandleCut()
     {
-        if (wasDestroyed) return;
+        if (!wasDestroyed)
+        {
+            Debug.Log("StarterBanana przecięty!");
 
-        wasDestroyed = true;
-        Debug.Log("StarterBanana przecięty!");
+            wasDestroyed = true;
 
-        if (TryGetComponent(out MeshRenderer mesh)) mesh.enabled = false;
-        if (TryGetComponent(out Collider collider)) collider.enabled = false;
+            if (TryGetComponent(out MeshRenderer mesh)) mesh.enabled = false;
+            if (TryGetComponent(out Collider collider)) collider.enabled = false;
 
-        if (particle != null) particle.Play();
-        if (audioSource != null) audioSource.Play();
+            if (particle != null) particle.Play();
+            if (audioSource != null) audioSource.Play();
 
-        // Reset życia i punktów
-        FruitScoreManager.Instance?.ResetScore();
-        LivesManager.Instance?.ResetLives();
+            FruitScoreManager.Instance.AddPoints(0); // lub 10, jeśli chcesz
 
-        Destroy(gameObject, 2f);
+            Destroy(gameObject, 2f);
+        }
     }
 }

@@ -4,26 +4,28 @@ using TMPro;
 public class LivesManager : MonoBehaviour
 {
     public static LivesManager Instance;
-
     public int maxLives = 3;
     private int currentLives;
 
     [Header("UI")]
-    public TMP_Text livesText; // Upewnij się, że przypisany w Inspectorze!
-
-    public bool IsGameOver => currentLives <= 0;
+    public TMP_Text livesText;
 
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+        }
         else
+        {
             Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
-        ResetLives();
+        currentLives = maxLives;
+        UpdateLivesUI();
     }
 
     public void LoseLife()
@@ -37,29 +39,21 @@ public class LivesManager : MonoBehaviour
         }
     }
 
-    public void ResetLives()
-    {
-        currentLives = maxLives;
-        UpdateLivesUI();
-    }
-
     void UpdateLivesUI()
     {
         if (livesText != null)
-            livesText.text = "Życia: " + currentLives.ToString();
+            livesText.text = "Lives: " + currentLives;
     }
 
     void GameOver()
     {
         Debug.Log("GAME OVER!");
+        // TODO: Zatrzymaj grę, wyświetl ekran, wyczyść scenę
+    }
 
-        // Wysłanie sygnału do wszystkich spawnerów
-        FruitSpawner[] spawners = FindObjectsOfType<FruitSpawner>();
-        foreach (var spawner in spawners)
-        {
-            spawner.StopSpawning();
-        }
-
-        // TODO: Dodać panel końca gry itd.
+    public void ResetLives()
+    {
+        currentLives = maxLives;
+        UpdateLivesUI();
     }
 }
