@@ -13,19 +13,14 @@ public class LivesManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance = this;
-        }
         else
-        {
             Destroy(gameObject);
-        }
     }
 
     private void Start()
     {
-        currentLives = maxLives;
-        UpdateLivesUI();
+        ResetLives();
     }
 
     public void LoseLife()
@@ -47,8 +42,15 @@ public class LivesManager : MonoBehaviour
 
     void GameOver()
     {
-        Debug.Log("GAME OVER!");
-        // TODO: Zatrzymaj grę, wyświetl ekran, wyczyść scenę
+        Debug.Log("🎮 GAME OVER!");
+
+        // Zatrzymaj wszystkie spawner-y owoców
+        FruitSpawner[] fruitSpawners = FindObjectsOfType<FruitSpawner>();
+        foreach (FruitSpawner spawner in fruitSpawners)
+        {
+            spawner.StopSpawning();
+        }
+
     }
 
     public void ResetLives()

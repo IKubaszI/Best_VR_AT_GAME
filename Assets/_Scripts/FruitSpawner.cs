@@ -8,6 +8,7 @@ public class FruitSpawner : MonoBehaviour
     public float launchForce = 5f;
 
     private bool hasStarted = false;
+    private bool isSpawning = true; 
 
     void Start()
     {
@@ -27,7 +28,7 @@ public class FruitSpawner : MonoBehaviour
 
     IEnumerator SpawnFruits()
     {
-        while (true)
+        while (isSpawning) // <- Uwaga na to!
         {
             yield return new WaitForSeconds(2f);
 
@@ -39,5 +40,10 @@ public class FruitSpawner : MonoBehaviour
                 rb.velocity = new Vector3(0f, 1f, 1f).normalized * launchForce;
             }
         }
+    }
+
+    public void StopSpawning()
+    {
+        isSpawning = false;
     }
 }
