@@ -46,4 +46,10 @@ public class FruitSpawner : MonoBehaviour
     {
         isSpawning = false;
     }
+    public void RestartSpawning()
+{
+    isSpawning = true;
+    StartCoroutine(SpawnFruits());
+}
+
 }

@@ -19,7 +19,7 @@ public class StarterBanana : MonoBehaviour
     {
         wasDestroyed = false;
     }
-
+    
     void Start()
     {
         startPosition = transform.position;

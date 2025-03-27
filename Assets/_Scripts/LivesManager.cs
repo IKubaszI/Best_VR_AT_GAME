@@ -1,14 +1,21 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class LivesManager : MonoBehaviour
 {
     public static LivesManager Instance;
+
     public int maxLives = 3;
     private int currentLives;
 
     [Header("UI")]
     public TMP_Text livesText;
+
+    [Header("Respawn Starter Banana")]
+    public GameObject starterBananaPrefab;
+    public Transform starterSpawnPoint;
+    public float respawnDelay = 3f;
 
     private void Awake()
     {
@@ -42,16 +49,39 @@ public class LivesManager : MonoBehaviour
 
     void GameOver()
     {
-        Debug.Log("🎮 GAME OVER!");
+        Debug.Log(" GAME OVER!");
 
-        // Zatrzymaj wszystkie spawner-y owoców
+        // Zatrzymaj owocowe spawnery
         FruitSpawner[] fruitSpawners = FindObjectsOfType<FruitSpawner>();
         foreach (FruitSpawner spawner in fruitSpawners)
         {
             spawner.StopSpawning();
         }
 
+        // Respawn starter banana
+        StartCoroutine(RespawnStarterBananaAfterDelay());
     }
+
+    IEnumerator RespawnStarterBananaAfterDelay()
+{
+    yield return new WaitForSeconds(respawnDelay);
+
+    if (starterBananaPrefab != null && starterSpawnPoint != null)
+    {
+        Instantiate(starterBananaPrefab, starterSpawnPoint.position, starterSpawnPoint.rotation);
+
+        ResetLives();
+        FruitScoreManager.Instance?.ResetScore();
+
+        // Wznów spawnery!
+        FruitSpawner[] fruitSpawners = FindObjectsOfType<FruitSpawner>();
+        foreach (FruitSpawner spawner in fruitSpawners)
+        {
+            spawner.RestartSpawning();
+        }
+    }
+}
+
 
     public void ResetLives()
     {
