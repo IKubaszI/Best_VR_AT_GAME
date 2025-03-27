@@ -17,6 +17,8 @@ public class LivesManager : MonoBehaviour
     public Transform starterSpawnPoint;
     public float respawnDelay = 3f;
 
+    public bool IsGameOver { get; private set; } // dodane tutaj!
+
     private void Awake()
     {
         if (Instance == null)
@@ -51,6 +53,8 @@ public class LivesManager : MonoBehaviour
     {
         Debug.Log(" GAME OVER!");
 
+        IsGameOver = true;
+
         // Zatrzymaj owocowe spawnery
         FruitSpawner[] fruitSpawners = FindObjectsOfType<FruitSpawner>();
         foreach (FruitSpawner spawner in fruitSpawners)
@@ -63,29 +67,29 @@ public class LivesManager : MonoBehaviour
     }
 
     IEnumerator RespawnStarterBananaAfterDelay()
-{
-    yield return new WaitForSeconds(respawnDelay);
-
-    if (starterBananaPrefab != null && starterSpawnPoint != null)
     {
-        Instantiate(starterBananaPrefab, starterSpawnPoint.position, starterSpawnPoint.rotation);
+        yield return new WaitForSeconds(respawnDelay);
 
-        ResetLives();
-        FruitScoreManager.Instance?.ResetScore();
-
-        // Wznów spawnery!
-        FruitSpawner[] fruitSpawners = FindObjectsOfType<FruitSpawner>();
-        foreach (FruitSpawner spawner in fruitSpawners)
+        if (starterBananaPrefab != null && starterSpawnPoint != null)
         {
-            spawner.RestartSpawning();
+            Instantiate(starterBananaPrefab, starterSpawnPoint.position, starterSpawnPoint.rotation);
+            ResetLives();
+            FruitScoreManager.Instance?.ResetScore();
+            IsGameOver = false;
+
+            // Restart spawnery po respawnie StarterBanana
+            FruitSpawner[] fruitSpawners = FindObjectsOfType<FruitSpawner>();
+            foreach (FruitSpawner spawner in fruitSpawners)
+            {
+                spawner.RestartSpawning();
+            }
         }
     }
-}
-
 
     public void ResetLives()
     {
         currentLives = maxLives;
         UpdateLivesUI();
+        IsGameOver = false;
     }
 }

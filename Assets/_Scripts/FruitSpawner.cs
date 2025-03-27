@@ -7,49 +7,49 @@ public class FruitSpawner : MonoBehaviour
     public Transform spawnPoint;
     public float launchForce = 5f;
 
-    private bool hasStarted = false;
-    private bool isSpawning = true; 
+    private Coroutine spawnCoroutine;
 
     void Start()
     {
-        StartCoroutine(WaitForStarterBananaToBeCut());
-    }
-
-    IEnumerator WaitForStarterBananaToBeCut()
-    {
-        while (!StarterBanana.wasDestroyed)
-        {
-            yield return null;
-        }
-
-        Debug.Log("Banana przecięty! Zaczynamy spawn.");
-        StartCoroutine(SpawnFruits());
+        spawnCoroutine = StartCoroutine(SpawnFruits());
     }
 
     IEnumerator SpawnFruits()
     {
-        while (isSpawning) // <- Uwaga na to!
+        while (true)
         {
-            yield return new WaitForSeconds(2f);
-
-            GameObject fruit = Instantiate(fruitPrefab, spawnPoint.position, Quaternion.identity);
-            Rigidbody rb = fruit.GetComponent<Rigidbody>();
-
-            if (rb != null)
+            // Jeżeli istnieje StartingBanana, NIE SPAWNUJ owoców
+            if (GameObject.FindGameObjectWithTag("StartingBanana") == null &&
+                LivesManager.Instance != null &&
+                !LivesManager.Instance.IsGameOver)
             {
-                rb.velocity = new Vector3(0f, 1f, 1f).normalized * launchForce;
+                GameObject fruit = Instantiate(fruitPrefab, spawnPoint.position, Quaternion.identity);
+                Rigidbody rb = fruit.GetComponent<Rigidbody>();
+
+                if (rb != null)
+                {
+                    rb.velocity = new Vector3(0f, 1f, 1f).normalized * launchForce;
+                }
             }
+            
+            yield return new WaitForSeconds(2f);
         }
     }
 
     public void StopSpawning()
     {
-        isSpawning = false;
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(spawnCoroutine);
+        }
     }
-    public void RestartSpawning()
-{
-    isSpawning = true;
-    StartCoroutine(SpawnFruits());
-}
 
+    public void RestartSpawning()
+    {
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(spawnCoroutine);
+        }
+        spawnCoroutine = StartCoroutine(SpawnFruits());
+    }
 }
