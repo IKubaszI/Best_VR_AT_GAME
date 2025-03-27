@@ -20,6 +20,7 @@ public class SwordCut : MonoBehaviour
         {
             GameObject target = hit.transform.gameObject;
 
+            // Starter Banana
             if (target.CompareTag("StartingBanana"))
             {
                 StarterBanana starter = target.GetComponent<StarterBanana>();
@@ -31,6 +32,19 @@ public class SwordCut : MonoBehaviour
                 }
             }
 
+            // Bomba
+            if (target.CompareTag("Bomb"))
+            {
+                ExplodableBomb bomb = target.GetComponent<ExplodableBomb>();
+                if (bomb != null)
+                {
+                    Debug.Log("Bomba przecięta (FixedUpdate)");
+                    bomb.OnSliced();
+                    return;
+                }
+            }
+
+            // Inny obiekt – np. owoc
             Slice(target);
         }
     }
@@ -68,7 +82,7 @@ public class SwordCut : MonoBehaviour
             FlyingBanana fb = target.GetComponent<FlyingBanana>();
             if (fb != null)
             {
-                fb.OnSliced(); // tu odpalany jest particle i punkty
+                fb.OnSliced(); // efekty + punkty
             }
 
             Destroy(target, 3f);
@@ -117,18 +131,4 @@ public class SwordCut : MonoBehaviour
 
         Destroy(slicedObject, 2f);
     }
-
-   public void OnTriggerEnter(Collider collision)
-{
-    if (collision.gameObject.CompareTag("Bomb"))
-    {
-        ExplodableBomb bomb = collision.GetComponent<ExplodableBomb>();
-        if (bomb != null)
-        {
-            bomb.OnSliced();
-        }
-    }
-}
-
-
 }
