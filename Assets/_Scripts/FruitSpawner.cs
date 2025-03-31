@@ -3,73 +3,96 @@ using UnityEngine;
 
 public class FruitSpawner : MonoBehaviour
 {
-    [Header("Prefaby owoców i bomb")]
-    public GameObject[] fruitPrefabs;
-    public GameObject bombPrefab;
-
-    [Header("Wspólne spawnery")]
+    [Header("Spawnery owoców")]
     public Transform[] spawnPoints;
 
-    [Header("Opcje spawnowania")]
-    public float launchForce = 5f;
-    public float spawnInterval = 2f;
-    [Range(0f, 1f)] public float bombChance = 0.2f; // 20% szans na bombę
+    [Header("Prefaby owoców")]
+    public GameObject[] fruitPrefabs; // ← Lista prefabów owoców
 
-    private Coroutine spawnCoroutine;
+    [Header("Prefab bomby")]
+    public GameObject bombPrefab;
+
+    [Header("Parametry wystrzału")]
+    public float launchForce = 7f;           // Większa siła dla lepszego zasięgu
+    public float arcHeightBoost = 1.5f;      // Dodatkowe "wzniesienie" lotu
+    public float minDelay = 0.8f;
+    public float maxDelay = 2f;
+
+    [Header("Szansa na bombę")]
+    [Range(0f, 1f)]
+    public float bombChance = 0.2f;
+
+    [Header("Cel rzutu (np. gracz/podest)")]
+    public Transform targetPoint;
+
+    private Coroutine spawnRoutine;
 
     void Start()
     {
-        spawnCoroutine = StartCoroutine(SpawnLoop());
+        StartSpawning();
+    }
+
+    public void StartSpawning()
+    {
+        spawnRoutine = StartCoroutine(SpawnLoop());
+    }
+
+    public void StopSpawning()
+    {
+        if (spawnRoutine != null)
+            StopCoroutine(spawnRoutine);
+    }
+
+    public void RestartSpawning()
+    {
+        StopSpawning();
+        StartSpawning();
     }
 
     IEnumerator SpawnLoop()
     {
+        yield return new WaitUntil(() =>
+            GameObject.FindGameObjectWithTag("StartingBanana") == null &&
+            LivesManager.Instance != null &&
+            !LivesManager.Instance.IsGameOver
+        );
+
         while (true)
         {
-            if (CanSpawn())
+            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+
+            GameObject prefabToSpawn;
+
+            // Losuj bombę lub owoc
+            if (Random.value < bombChance)
             {
-                Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+                prefabToSpawn = bombPrefab;
+            }
+            else
+            {
+                // Losowy owoc z listy
+                prefabToSpawn = fruitPrefabs[Random.Range(0, fruitPrefabs.Length)];
+            }
 
-                GameObject prefabToSpawn;
-                if (Random.value < bombChance && bombPrefab != null)
-                {
-                    prefabToSpawn = bombPrefab;
-                }
-                else
-                {
-                    prefabToSpawn = fruitPrefabs[Random.Range(0, fruitPrefabs.Length)];
-                }
-
+            // Tworzenie obiektu
+            if (prefabToSpawn != null && targetPoint != null)
+            {
                 GameObject obj = Instantiate(prefabToSpawn, spawnPoint.position, Quaternion.identity);
                 Rigidbody rb = obj.GetComponent<Rigidbody>();
 
                 if (rb != null)
                 {
-                    rb.velocity = new Vector3(0f, 1f, 1f).normalized * launchForce;
+                    Vector3 direction = (targetPoint.position - spawnPoint.position).normalized;
+
+                    // Dodaj "łuk" – pionowe wzmocnienie trajektorii
+                    direction.y += arcHeightBoost;
+
+                    direction.Normalize();
+                    rb.velocity = direction * launchForce;
                 }
             }
 
-            yield return new WaitForSeconds(spawnInterval);
+            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
         }
-    }
-
-    bool CanSpawn()
-    {
-        return GameObject.FindGameObjectWithTag("StartingBanana") == null &&
-               LivesManager.Instance != null &&
-               !LivesManager.Instance.IsGameOver;
-    }
-
-    public void StopSpawning()
-    {
-        if (spawnCoroutine != null)
-        {
-            StopCoroutine(spawnCoroutine);
-        }
-    }
-
-    public void RestartSpawning()
-    {
-        spawnCoroutine = StartCoroutine(SpawnLoop());
     }
 }

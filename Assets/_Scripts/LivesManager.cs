@@ -64,14 +64,18 @@ public class LivesManager : MonoBehaviour
         }
         heartsList.Clear();
 
-        // Stwórz nowe serca zgodnie z aktualną liczbą żyć
+        // Wylicz przesunięcie dla wyrównania od prawej do lewej
+        float totalWidth = (maxLives - 1) * spacing;
+
+        // Dodaj nowe serca od prawej do lewej
         for (int i = 0; i < currentLives; i++)
         {
-            Vector3 offset = new Vector3(i * spacing, 0, 0);
+            Vector3 offset = new Vector3(totalWidth - i * spacing, 0, 0);
             GameObject newHeart = Instantiate(heartPrefab, heartsContainer.position + offset, Quaternion.identity, heartsContainer);
             heartsList.Add(newHeart);
         }
     }
+
 
     void GameOver()
     {
