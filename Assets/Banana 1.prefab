@@ -329,6 +329,11 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3094987432134315611, guid: 30a1335945d8410449b953446b68163c,
+        type: 3}
+      propertyPath: clearBehavior
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3621460138471412248, guid: 30a1335945d8410449b953446b68163c,
         type: 3}
       propertyPath: m_Layer
