@@ -73,23 +73,33 @@ public class StarterBanana : MonoBehaviour
         HandleCut();
     }
 
-    private void HandleCut()
+   private void HandleCut()
+{
+    if (!wasDestroyed)
     {
-        if (!wasDestroyed)
+        Debug.Log("StarterBanana przecięty!");
+
+        wasDestroyed = true;
+
+        if (TryGetComponent(out MeshRenderer mesh)) mesh.enabled = false;
+        if (TryGetComponent(out Collider collider)) collider.enabled = false;
+
+        if (particle != null) particle.Play();
+        if (audioSource != null) audioSource.Play();
+
+        // ⬇️ Zresetuj wynik i życia
+        FruitScoreManager.Instance?.ResetScore();
+        LivesManager.Instance?.ResetLives();
+
+        // ⬇️ Wznów wszystkie spawnery
+        var allSpawners = GameObject.FindObjectsOfType<FruitSpawner>();
+        foreach (var spawner in allSpawners)
         {
-            Debug.Log("StarterBanana przecięty!");
-
-            wasDestroyed = true;
-
-            if (TryGetComponent(out MeshRenderer mesh)) mesh.enabled = false;
-            if (TryGetComponent(out Collider collider)) collider.enabled = false;
-
-            if (particle != null) particle.Play();
-            if (audioSource != null) audioSource.Play();
-
-            FruitScoreManager.Instance.AddPoints(0); // lub 10, jeśli chcesz
-
-            Destroy(gameObject, 2f);
+            spawner.RestartSpawning();
         }
+
+        Destroy(gameObject, 2f);
     }
+}
+
 }

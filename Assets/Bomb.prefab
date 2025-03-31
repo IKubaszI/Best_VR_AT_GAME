@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3613414597390062538}
   - component: {fileID: 8394462686717476070}
   - component: {fileID: 3831890380194688956}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: SpawnPartickle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,9 +26,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3698061771015517638}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.000000014901161, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.6, y: 4.6, z: 4.6}
+  m_LocalScale: {x: 4.6000004, y: 4.6, z: 4.5999994}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3942043544299780356}
@@ -4767,7 +4767,7 @@ GameObject:
   - component: {fileID: 8482960435719276031}
   - component: {fileID: 5557725501939421142}
   m_Layer: 0
-  m_Name: On ground
+  m_Name: Hit Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4782,7 +4782,7 @@ Transform:
   m_GameObject: {fileID: 4466894300077901318}
   m_LocalRotation: {x: 0.76744664, y: 0.20247164, z: 0.18307857, w: -0.5800975}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6.72, y: 6.72, z: 6.72}
+  m_LocalScale: {x: 6.719999, y: 6.72, z: 6.719999}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6082243597601010992}
@@ -4806,7 +4806,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -9641,9 +9641,9 @@ Transform:
   m_LocalScale: {x: 0.41548502, y: 0.41548502, z: 0.41548502}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6065214785108740895}
-  - {fileID: 5612539901903976539}
   - {fileID: 7748540619277280194}
+  - {fileID: 5612539901903976539}
+  - {fileID: 6065214785108740895}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9752,7 +9752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 413aeca086144ab4ba7bc5d5be1bdf20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundEffect: {fileID: 122645814361760753}
+  groundEffect: {fileID: 3613414597390062538}
   groundSound: {fileID: 5557725501939421142}
 --- !u!114 &1319856432347444745
 MonoBehaviour:
@@ -9874,7 +9874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc754324c7444f4c87bac730894f99c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionEffect: {fileID: 3613414597390062538}
+  explosionEffect: {fileID: 122645814361760753}
   explosionSound: {fileID: 4677117967899698931}
 --- !u!1 &8788522152455490329
 GameObject:
@@ -9889,7 +9889,7 @@ GameObject:
   - component: {fileID: 8446137246309814768}
   - component: {fileID: 1168710253975530197}
   m_Layer: 0
-  m_Name: On ground#2
+  m_Name: Hit Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9904,7 +9904,7 @@ Transform:
   m_GameObject: {fileID: 8788522152455490329}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6934524, y: 0.6934523, z: 0.6934525}
+  m_LocalScale: {x: 0.69345224, y: 0.6934521, z: 0.69345254}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6065214785108740895}
@@ -9927,7 +9927,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:

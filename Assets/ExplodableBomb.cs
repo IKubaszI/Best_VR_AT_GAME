@@ -20,6 +20,9 @@ public class ExplodableBomb : MonoBehaviour
             explosionEffect.transform.SetParent(null);
             explosionEffect.transform.position = transform.position;
             explosionEffect.Play();
+
+            //  Zniszcz particle system po jego czasie trwania
+            Destroy(explosionEffect.gameObject, explosionEffect.main.duration + 0.5f);
         }
 
         // Dźwięk
@@ -38,4 +41,6 @@ public class ExplodableBomb : MonoBehaviour
 
         Destroy(gameObject, 2f);
     }
+
+
 }
