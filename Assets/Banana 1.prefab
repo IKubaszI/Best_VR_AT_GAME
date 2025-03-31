@@ -264,6 +264,11 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 951067166737305248, guid: 30a1335945d8410449b953446b68163c,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2408982726837702753, guid: 30a1335945d8410449b953446b68163c,
         type: 3}
       propertyPath: m_RootOrder
@@ -319,6 +324,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2761706679753535410, guid: 30a1335945d8410449b953446b68163c,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3621460138471412248, guid: 30a1335945d8410449b953446b68163c,
         type: 3}
       propertyPath: m_Layer
@@ -332,6 +342,11 @@ PrefabInstance:
     - target: {fileID: 3647148563127914272, guid: 30a1335945d8410449b953446b68163c,
         type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5585195063760049654, guid: 30a1335945d8410449b953446b68163c,
+        type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5862481684017481539, guid: 30a1335945d8410449b953446b68163c,
