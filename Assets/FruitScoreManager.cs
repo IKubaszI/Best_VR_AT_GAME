@@ -39,6 +39,6 @@ public class FruitScoreManager : MonoBehaviour
     private void UpdateScoreDisplay()
     {
         if (scoreText != null)
-            scoreText.text = "Twój wynik: " + score.ToString();
+            scoreText.text = "" + score.ToString();
     }
 }

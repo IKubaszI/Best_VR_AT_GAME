@@ -3,37 +3,61 @@ using UnityEngine;
 
 public class FruitSpawner : MonoBehaviour
 {
-    public GameObject fruitPrefab;
-    public Transform spawnPoint;
+    [Header("Prefaby owoców i bomb")]
+    public GameObject[] fruitPrefabs;
+    public GameObject bombPrefab;
+
+    [Header("Wspólne spawnery")]
+    public Transform[] spawnPoints;
+
+    [Header("Opcje spawnowania")]
     public float launchForce = 5f;
+    public float spawnInterval = 2f;
+    [Range(0f, 1f)] public float bombChance = 0.2f; // 20% szans na bombę
 
     private Coroutine spawnCoroutine;
 
     void Start()
     {
-        spawnCoroutine = StartCoroutine(SpawnFruits());
+        spawnCoroutine = StartCoroutine(SpawnLoop());
     }
 
-    IEnumerator SpawnFruits()
+    IEnumerator SpawnLoop()
     {
         while (true)
         {
-            // Jeżeli istnieje StartingBanana, NIE SPAWNUJ owoców
-            if (GameObject.FindGameObjectWithTag("StartingBanana") == null &&
-                LivesManager.Instance != null &&
-                !LivesManager.Instance.IsGameOver)
+            if (CanSpawn())
             {
-                GameObject fruit = Instantiate(fruitPrefab, spawnPoint.position, Quaternion.identity);
-                Rigidbody rb = fruit.GetComponent<Rigidbody>();
+                Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+
+                GameObject prefabToSpawn;
+                if (Random.value < bombChance && bombPrefab != null)
+                {
+                    prefabToSpawn = bombPrefab;
+                }
+                else
+                {
+                    prefabToSpawn = fruitPrefabs[Random.Range(0, fruitPrefabs.Length)];
+                }
+
+                GameObject obj = Instantiate(prefabToSpawn, spawnPoint.position, Quaternion.identity);
+                Rigidbody rb = obj.GetComponent<Rigidbody>();
 
                 if (rb != null)
                 {
                     rb.velocity = new Vector3(0f, 1f, 1f).normalized * launchForce;
                 }
             }
-            
-            yield return new WaitForSeconds(2f);
+
+            yield return new WaitForSeconds(spawnInterval);
         }
+    }
+
+    bool CanSpawn()
+    {
+        return GameObject.FindGameObjectWithTag("StartingBanana") == null &&
+               LivesManager.Instance != null &&
+               !LivesManager.Instance.IsGameOver;
     }
 
     public void StopSpawning()
@@ -46,10 +70,6 @@ public class FruitSpawner : MonoBehaviour
 
     public void RestartSpawning()
     {
-        if (spawnCoroutine != null)
-        {
-            StopCoroutine(spawnCoroutine);
-        }
-        spawnCoroutine = StartCoroutine(SpawnFruits());
+        spawnCoroutine = StartCoroutine(SpawnLoop());
     }
 }

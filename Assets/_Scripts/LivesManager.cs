@@ -1,23 +1,26 @@
 using UnityEngine;
-using TMPro;
-using System.Collections;
+using System.Collections.Generic;
 
 public class LivesManager : MonoBehaviour
 {
     public static LivesManager Instance;
 
+    [Header("Ustawienia żyć")]
     public int maxLives = 3;
     private int currentLives;
 
-    [Header("UI")]
-    public TMP_Text livesText;
+    [Header("Prefab serca (asset)")]
+    public GameObject heartPrefab;
+    public Transform heartsContainer;
+    public float spacing = 0.3f; // mniejszy odstęp
 
-    [Header("Respawn Starter Banana")]
+    private List<GameObject> heartsList = new List<GameObject>();
+
+    [Header("Starter Banana")]
     public GameObject starterBananaPrefab;
     public Transform starterSpawnPoint;
-    public float respawnDelay = 3f;
 
-    public bool IsGameOver { get; private set; } // dodane tutaj!
+    public bool IsGameOver { get; private set; }
 
     private void Awake()
     {
@@ -34,8 +37,10 @@ public class LivesManager : MonoBehaviour
 
     public void LoseLife()
     {
+        if (currentLives <= 0) return;
+
         currentLives--;
-        UpdateLivesUI();
+        UpdateHearts();
 
         if (currentLives <= 0)
         {
@@ -43,53 +48,46 @@ public class LivesManager : MonoBehaviour
         }
     }
 
-    void UpdateLivesUI()
+    public void ResetLives()
     {
-        if (livesText != null)
-            livesText.text = "Lives: " + currentLives;
+        currentLives = maxLives;
+        IsGameOver = false;
+        UpdateHearts();
+    }
+
+    void UpdateHearts()
+    {
+        // Usuń stare serca
+        foreach (GameObject heart in heartsList)
+        {
+            Destroy(heart);
+        }
+        heartsList.Clear();
+
+        // Stwórz nowe serca zgodnie z aktualną liczbą żyć
+        for (int i = 0; i < currentLives; i++)
+        {
+            Vector3 offset = new Vector3(i * spacing, 0, 0);
+            GameObject newHeart = Instantiate(heartPrefab, heartsContainer.position + offset, Quaternion.identity, heartsContainer);
+            heartsList.Add(newHeart);
+        }
     }
 
     void GameOver()
     {
-        Debug.Log(" GAME OVER!");
-
+        Debug.Log("GAME OVER!");
         IsGameOver = true;
 
-        // Zatrzymaj owocowe spawnery
-        FruitSpawner[] fruitSpawners = FindObjectsOfType<FruitSpawner>();
-        foreach (FruitSpawner spawner in fruitSpawners)
+        // Zatrzymaj wszystkie spawnery
+        foreach (var spawner in FindObjectsOfType<FruitSpawner>())
         {
             spawner.StopSpawning();
         }
 
-        // Respawn starter banana
-        StartCoroutine(RespawnStarterBananaAfterDelay());
-    }
-
-    IEnumerator RespawnStarterBananaAfterDelay()
-    {
-        yield return new WaitForSeconds(respawnDelay);
-
+        // Wznów starter banana
         if (starterBananaPrefab != null && starterSpawnPoint != null)
         {
             Instantiate(starterBananaPrefab, starterSpawnPoint.position, starterSpawnPoint.rotation);
-            ResetLives();
-            FruitScoreManager.Instance?.ResetScore();
-            IsGameOver = false;
-
-            // Restart spawnery po respawnie StarterBanana
-            FruitSpawner[] fruitSpawners = FindObjectsOfType<FruitSpawner>();
-            foreach (FruitSpawner spawner in fruitSpawners)
-            {
-                spawner.RestartSpawning();
-            }
         }
-    }
-
-    public void ResetLives()
-    {
-        currentLives = maxLives;
-        UpdateLivesUI();
-        IsGameOver = false;
     }
 }
