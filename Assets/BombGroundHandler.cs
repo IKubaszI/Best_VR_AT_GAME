@@ -48,6 +48,6 @@ public class BombGroundHandler : MonoBehaviour
         if (TryGetComponent(out MeshRenderer mesh)) mesh.enabled = false;
         if (TryGetComponent(out Collider col)) col.enabled = false;
 
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 0.4f);
     }
 }
