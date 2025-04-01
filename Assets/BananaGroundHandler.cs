@@ -29,6 +29,9 @@ public class BananaGroundHandler : MonoBehaviour
         hasSplashed = true;
         Debug.Log("FlyingBanana: uderzył o ziemię!");
 
+        // Resetuj combo
+        ComboManager.Instance?.ResetCombo();
+
         // Odpal cząsteczki
         if (groundEffect != null)
         {
