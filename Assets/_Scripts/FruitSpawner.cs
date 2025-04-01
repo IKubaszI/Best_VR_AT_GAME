@@ -7,14 +7,14 @@ public class FruitSpawner : MonoBehaviour
     public Transform[] spawnPoints;
 
     [Header("Prefaby owoców")]
-    public GameObject[] fruitPrefabs; // ← Lista prefabów owoców
+    public GameObject[] fruitPrefabs;
 
     [Header("Prefab bomby")]
     public GameObject bombPrefab;
 
     [Header("Parametry wystrzału")]
-    public float launchForce = 7f;           // Większa siła dla lepszego zasięgu
-    public float arcHeightBoost = 1.5f;      // Dodatkowe "wzniesienie" lotu
+    public float launchForce = 7f;
+    public float arcHeightBoost = 1.5f;
     public float minDelay = 0.8f;
     public float maxDelay = 2f;
 
@@ -24,6 +24,9 @@ public class FruitSpawner : MonoBehaviour
 
     [Header("Cel rzutu (np. gracz/podest)")]
     public Transform targetPoint;
+
+    [Header("Animatorzy małp dla każdego spawnera")]
+    public Animator[] monkeyAnimators; // Małpy odpowiadające spawnerom
 
     private Coroutine spawnRoutine;
 
@@ -59,7 +62,9 @@ public class FruitSpawner : MonoBehaviour
 
         while (true)
         {
-            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            int index = Random.Range(0, spawnPoints.Length);
+            Transform spawnPoint = spawnPoints[index];
+            Animator monkeyAnimator = (monkeyAnimators.Length > index) ? monkeyAnimators[index] : null;
 
             GameObject prefabToSpawn;
 
@@ -70,11 +75,9 @@ public class FruitSpawner : MonoBehaviour
             }
             else
             {
-                // Losowy owoc z listy
                 prefabToSpawn = fruitPrefabs[Random.Range(0, fruitPrefabs.Length)];
             }
 
-            // Tworzenie obiektu
             if (prefabToSpawn != null && targetPoint != null)
             {
                 GameObject obj = Instantiate(prefabToSpawn, spawnPoint.position, Quaternion.identity);
@@ -83,12 +86,16 @@ public class FruitSpawner : MonoBehaviour
                 if (rb != null)
                 {
                     Vector3 direction = (targetPoint.position - spawnPoint.position).normalized;
-
-                    // Dodaj "łuk" – pionowe wzmocnienie trajektorii
                     direction.y += arcHeightBoost;
-
                     direction.Normalize();
+
                     rb.velocity = direction * launchForce;
+                }
+
+                // Wywołaj animację małpy
+                if (monkeyAnimator != null)
+                {
+                    monkeyAnimator.SetTrigger("Throw"); // Trigger w animatorze
                 }
             }
 
