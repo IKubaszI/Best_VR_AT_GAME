@@ -10,7 +10,7 @@ public class BombGroundHandler : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!hasExploded && other.CompareTag("Ground"))
+        if (!hasExploded && other.CompareTag("Ground") && !WasCut())
         {
             HandleGroundImpact();
         }
@@ -18,18 +18,23 @@ public class BombGroundHandler : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (!hasExploded && collision.gameObject.CompareTag("Ground"))
+        if (!hasExploded && collision.gameObject.CompareTag("Ground") && !WasCut())
         {
             HandleGroundImpact();
         }
     }
 
+    bool WasCut()
+    {
+        var bomb = GetComponent<ExplodableBomb>();
+        return bomb != null && bomb.wasCut;
+    }
+
     void HandleGroundImpact()
     {
         hasExploded = true;
-        Debug.Log("💣 Bomba uderzyła o ziemię!");
+        Debug.Log(" Bomba uderzyła o ziemię!");
 
-        // Odtwórz efekt cząsteczek
         if (groundEffect != null)
         {
             groundEffect.transform.SetParent(null);
@@ -37,14 +42,12 @@ public class BombGroundHandler : MonoBehaviour
             groundEffect.Play();
         }
 
-        // Odtwórz dźwięk
         if (groundSound != null)
             groundSound.Play();
 
-        // Wyłącz renderowanie i kolizję
         if (TryGetComponent(out MeshRenderer mesh)) mesh.enabled = false;
         if (TryGetComponent(out Collider col)) col.enabled = false;
 
-        Destroy(gameObject, 2f); // niszczy bombę po 2 sek
+        Destroy(gameObject, 2f);
     }
 }

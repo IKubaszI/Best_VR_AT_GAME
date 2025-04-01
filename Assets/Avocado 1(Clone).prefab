@@ -10318,8 +10318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundEffect: {fileID: 7263063247278817893}
-  groundSound: {fileID: 2751047161977022130, guid: a9881dc77229f134f99b458a7b1309be,
-    type: 3}
+  groundSound: {fileID: 7674241230142368312}
 --- !u!114 &9031220905126159426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10333,6 +10332,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutEffect: {fileID: 7263063247278817893}
-  cutSound: {fileID: 5695352013618746796, guid: a9881dc77229f134f99b458a7b1309be,
-    type: 3}
+  cutSound: {fileID: 6260942269627887029}
   disablePoints: 0
