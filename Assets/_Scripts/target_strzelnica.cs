@@ -7,13 +7,15 @@ public class target_strzelnica : MonoBehaviour
     public TMP_Text scoreText;
 
     public int scoreShooter = 0;
-    [SerializeField]
     private AudioSource audioSource;
 
     void Start()
     {
         disappearManager = transform.parent.GetComponent<DisappearManager>();
-        scoreText.text = "Twoj wynik: " + scoreShooter.ToString();
+        audioSource = GetComponent<AudioSource>();
+
+        if (scoreText != null)
+            scoreText.text = "Twoj wynik: " + scoreShooter.ToString();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -21,9 +23,9 @@ public class target_strzelnica : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             Debug.Log("Trafiono w tarczę!");
-            AddPoints(100); // Dodaj 100 pkt za trafienie
-            disappearManager.DisappearAndMove();
-            audioSource.Play();
+            AddPoints(100);
+            disappearManager?.DisappearAndMove();
+            audioSource?.Play();
         }
     }
 
@@ -33,8 +35,9 @@ public class target_strzelnica : MonoBehaviour
         UpdateScoreText();
     }
 
-    public void UpdateScoreText() // Zmiana na public
+    public void UpdateScoreText()
     {
-        scoreText.text = "Twoj wynik: " + scoreShooter.ToString();
+        if (scoreText != null)
+            scoreText.text = "Twoj wynik: " + scoreShooter.ToString();
     }
 }
