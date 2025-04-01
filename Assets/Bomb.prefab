@@ -9766,6 +9766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionEffect: {fileID: 8143199561830888417}
   explosionSound: {fileID: 4677117967899698931}
+  wasCut: 0
 --- !u!1 &5445762751647115606
 GameObject:
   m_ObjectHideFlags: 0

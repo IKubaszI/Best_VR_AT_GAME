@@ -21103,7 +21103,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 86
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -57926,6 +57926,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: StartingBanana
+      objectReference: {fileID: 0}
+    - target: {fileID: 6115700974102224821, guid: 2a0509ee87f3a814da71ab999e9a7795,
+        type: 3}
+      propertyPath: Priority
+      value: 86
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
