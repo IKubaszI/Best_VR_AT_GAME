@@ -16,6 +16,11 @@ TagManager:
   - Bow2
   - Bullet
   - Fruit
+  - StartingBanana
+  - Bomb
+  - Ground
+  - Katana
+  - Magazine
   layers:
   - Default
   - TransparentFX
@@ -27,8 +32,8 @@ TagManager:
   - Target
   - Sliceable
   - Ninja_Floor
-  - 
-  - 
+  - Player
+  - GrabInteractable
   - 
   - 
   - 
