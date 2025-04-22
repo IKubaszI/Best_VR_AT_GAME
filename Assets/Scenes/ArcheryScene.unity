@@ -32638,6 +32638,37 @@ Transform:
   m_Father: {fileID: 1936098622}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1344384665
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1344384666}
+  m_Layer: 11
+  m_Name: Slider Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1344384666
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344384665}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.00000001211166, y: 0.0941, z: -0.0147}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 921090566675672715}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1347703193
 GameObject:
   m_ObjectHideFlags: 0
@@ -46811,7 +46842,7 @@ MonoBehaviour:
   reload: {fileID: 8300000, guid: a7203f2b685dd7349b9ecb910f42776f, type: 3}
   noAmmo: {fileID: 8300000, guid: ea8430feecefe4e4e96b6372794118ae, type: 3}
   magazine: {fileID: 669867312479733672}
-  socketInteractor: {fileID: 0}
+  socketInteractor: {fileID: 652544006}
 --- !u!1001 &1698683459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59657,6 +59688,7 @@ Transform:
   - {fileID: 921090566675672717}
   - {fileID: 921090566675672713}
   - {fileID: 921090566675672711}
+  - {fileID: 1344384666}
   m_Father: {fileID: 8565972283230758200}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -59723,6 +59755,7 @@ GameObject:
   - component: {fileID: 921090566675837614}
   - component: {fileID: 921090566675837612}
   - component: {fileID: 921090566675837610}
+  - component: {fileID: 921090566675837617}
   m_Layer: 11
   m_Name: Slider
   m_TagString: Untagged
@@ -60051,6 +60084,35 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.021866916, y: 0.042368386, z: 0.20516212}
   m_Center: {x: -0.00000023841858, y: 0.0000009443611, z: 0.057566248}
+--- !u!114 &921090566675837617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921090566675837609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d87cb9b06774f42983849fa8c445ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  threshold: 0.02
+  target: {fileID: 1344384666}
+  OnReached:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1698680927}
+        m_TargetAssemblyTypeName: SimpleShoot, Assembly-CSharp
+        m_MethodName: Slide
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!23 &984043091122335779
 MeshRenderer:
   m_ObjectHideFlags: 0
