@@ -47606,8 +47606,8 @@ MonoBehaviour:
   gunAnimator: {fileID: 7931135121988897498}
   barrelLocation: {fileID: 8574493024727935682}
   casingExitLocation: {fileID: 8574721986271287350}
-  destroyTimer: 4.9
-  shotPower: 1000
+  destroyTimer: 7
+  shotPower: 600
   ejectPower: 100.7
   source: {fileID: 7931135121988897499}
   fireSound: {fileID: 8300000, guid: d7ec82f13154c124e94fd2bcb119c9e2, type: 3}
