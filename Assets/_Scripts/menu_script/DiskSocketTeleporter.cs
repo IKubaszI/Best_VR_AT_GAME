@@ -1,4 +1,3 @@
-// DiskSocketTeleporter.cs
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.SceneManagement;
@@ -6,20 +5,12 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(XRSocketInteractor))]
 public class DiskSocketTeleporter : MonoBehaviour
 {
-    private XRSocketInteractor _socketInteractor;
+    XRSocketInteractor _socket;
+    void Awake() => _socket = GetComponent<XRSocketInteractor>();
+    void OnEnable()  => _socket.selectEntered.AddListener(OnDiskPlaced);
+    void OnDisable() => _socket.selectEntered.RemoveListener(OnDiskPlaced);
 
-    private void Awake()
-    {
-        _socketInteractor = GetComponent<XRSocketInteractor>();
-    }
-
-    private void OnEnable()
-        => _socketInteractor.selectEntered.AddListener(OnDiskPlaced);
-
-    private void OnDisable()
-        => _socketInteractor.selectEntered.RemoveListener(OnDiskPlaced);
-
-    private void OnDiskPlaced(SelectEnterEventArgs args)
+    void OnDiskPlaced(SelectEnterEventArgs args)
     {
         var disk = args.interactableObject.transform.GetComponent<DiskSelector>();
         if (disk == null) return;
@@ -27,12 +18,16 @@ public class DiskSocketTeleporter : MonoBehaviour
         var gm = GameManager_Menu.Instance;
         if (gm == null)
         {
-            Debug.LogError("GameManager_Menu.Instance jest null! Upewnij się, że masz w scenie obiekt z GameManager_Menu i DontDestroyOnLoad.");
+            Debug.LogError("Brak GameManager_Menu.Instance!");
             return;
         }
 
-        gm.spawnPosition    = disk.spawnPosition;
-        gm.spawnEulerAngles = disk.spawnEulerAngles;
-        SceneManager.LoadScene(gm.mainSceneName);
+        // zapamiętujemy parametry
+        gm.minigameSceneName = disk.minigameSceneName;
+        gm.spawnPosition     = disk.spawnPosition;
+        gm.spawnEulerAngles  = disk.spawnEulerAngles;
+
+        // ładujemy minigierkę
+        SceneManager.LoadScene(disk.minigameSceneName, LoadSceneMode.Single);
     }
 }

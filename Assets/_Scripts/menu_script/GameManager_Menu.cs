@@ -1,45 +1,57 @@
-// GameManager_Menu.cs
 using UnityEngine;
 using UnityEngine.SceneManagement;
-// potrzebne do XROrigin
 using Unity.XR.CoreUtils;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManager_Menu : MonoBehaviour
 {
     public static GameManager_Menu Instance { get; private set; }
 
-    [Header("Ustawienia sceny")]
-    [Tooltip("Nazwa sceny, którą przeładujesz (dokładnie tak samo jak w Build Settings)")]
-    public string mainSceneName = "ArcheryScene";
+    [HideInInspector] public string    minigameSceneName;
+    [HideInInspector] public Vector3   spawnPosition;
+    [HideInInspector] public Vector3   spawnEulerAngles;
 
-    [HideInInspector] public Vector3 spawnPosition;
-    [HideInInspector] public Vector3 spawnEulerAngles;
+    XROrigin             _persistentOrigin;
+    XRInteractionManager _persistentInteractionManager;
 
-    private void Awake()
+    void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-        else Destroy(gameObject);
+        if (Instance != null) { Destroy(gameObject); return; }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        // zachowaj swój rig i manager z menu
+        _persistentOrigin              = FindObjectOfType<XROrigin>();
+        _persistentInteractionManager  = FindObjectOfType<XRInteractionManager>();
+
+        if (_persistentOrigin != null)
+            DontDestroyOnLoad(_persistentOrigin.gameObject);
+        if (_persistentInteractionManager != null)
+            DontDestroyOnLoad(_persistentInteractionManager.gameObject);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != mainSceneName) 
-            return;
+        // czy to ta minigierka?
+        if (scene.name != minigameSceneName) return;
 
-        // Szukamy XR Origin
-        var xrOrigin = FindObjectOfType<XROrigin>();
-        if (xrOrigin != null)
+        // usuń wszelkie nowe rigs/manager’y
+        foreach (var origin in FindObjectsOfType<XROrigin>())
+            if (origin != _persistentOrigin)
+                Destroy(origin.gameObject);
+
+        foreach (var mgr in FindObjectsOfType<XRInteractionManager>())
+            if (mgr != _persistentInteractionManager)
+                Destroy(mgr.gameObject);
+
+        // teleportuj persistentny rig
+        if (_persistentOrigin != null)
         {
-            xrOrigin.transform.position    = spawnPosition;
-            xrOrigin.transform.eulerAngles = spawnEulerAngles;
-            return;
+            _persistentOrigin.transform.position    = spawnPosition;
+            _persistentOrigin.transform.eulerAngles = spawnEulerAngles;
         }
-
-        Debug.LogError($"Wczytano {mainSceneName}, ale nie znalazłem XROrigin w scenie.");
+        else Debug.LogError("Persistent XROrigin jest null!");
     }
 }

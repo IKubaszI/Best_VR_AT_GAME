@@ -1,14 +1,13 @@
-// DiskSelector.cs
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 [RequireComponent(typeof(XRGrabInteractable))]
 public class DiskSelector : MonoBehaviour
 {
-    [Header("Koordynaty punktu startowego")]
-    [Tooltip("Współrzędne (X, Y, Z) miejsca, na które chcesz przeteleportować gracza")]
-    public Vector3 spawnPosition;
+    [Header("Nazwa sceny minigry (dokładnie jak w Build Settings)")]
+    public string minigameSceneName;
 
-    [Tooltip("Euler (X, Y, Z) rotacji, do której gracz zostanie ustawiony")]
+    [Header("Koordynaty startowe w nowej scenie")]
+    public Vector3 spawnPosition;
     public Vector3 spawnEulerAngles;
 }
