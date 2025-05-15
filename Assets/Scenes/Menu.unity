@@ -132,7 +132,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 76761260}
-  - component: {fileID: 76761261}
   m_Layer: 0
   m_Name: ----General Stuff
   m_TagString: Untagged
@@ -159,21 +158,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &76761261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 76761259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a953039a2467cd4d956a5c5d3f9307b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainSceneName: ArcheryScene
-  spawnPosition: {x: 0, y: 0, z: 0}
-  spawnEulerAngles: {x: 0, y: 0, z: 0}
 --- !u!1 &120799788
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,7 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 120799789}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Hands
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +200,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 186868213}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -475,6 +459,7 @@ GameObject:
   - component: {fileID: 466244656}
   - component: {fileID: 466244655}
   - component: {fileID: 466244660}
+  - component: {fileID: 466244661}
   m_Layer: 0
   m_Name: DiskSocket
   m_TagString: Untagged
@@ -624,6 +609,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4744479cf1d85f64492cf86933b5f243, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &466244661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466244654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a953039a2467cd4d956a5c5d3f9307b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minigameSceneName: 
+  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnEulerAngles: {x: 0, y: 0, z: 0}
 --- !u!1 &505578252
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,7 +900,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 610221183}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1217,6 +1217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac7af15150dcd643aa08dbe42a497ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minigameSceneName: ArcheryScene
   spawnPosition: {x: 0, y: 0, z: 0}
   spawnEulerAngles: {x: 0, y: 0, z: 0}
 --- !u!114 &1360480303
@@ -1441,7 +1442,7 @@ GameObject:
   - component: {fileID: 1455554598}
   - component: {fileID: 1455554597}
   - component: {fileID: 1455554596}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: RIght Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1763,7 +1764,7 @@ GameObject:
   - component: {fileID: 1478972412}
   m_Layer: 10
   m_Name: XR Origin
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2195,7 +2196,7 @@ GameObject:
   - component: {fileID: 2036664498}
   - component: {fileID: 2036664497}
   - component: {fileID: 2036664496}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Left Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}

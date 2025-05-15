@@ -1,57 +1,45 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+// żeby znaleźć XROrigin
 using Unity.XR.CoreUtils;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManager_Menu : MonoBehaviour
 {
     public static GameManager_Menu Instance { get; private set; }
 
-    [HideInInspector] public string    minigameSceneName;
-    [HideInInspector] public Vector3   spawnPosition;
-    [HideInInspector] public Vector3   spawnEulerAngles;
+    [HideInInspector] public string  minigameSceneName;
+    [HideInInspector] public Vector3 spawnPosition;
+    [HideInInspector] public Vector3 spawnEulerAngles;
 
-    XROrigin             _persistentOrigin;
-    XRInteractionManager _persistentInteractionManager;
-
-    void Awake()
+    private void Awake()
     {
-        if (Instance != null) { Destroy(gameObject); return; }
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        // zachowaj swój rig i manager z menu
-        _persistentOrigin              = FindObjectOfType<XROrigin>();
-        _persistentInteractionManager  = FindObjectOfType<XRInteractionManager>();
-
-        if (_persistentOrigin != null)
-            DontDestroyOnLoad(_persistentOrigin.gameObject);
-        if (_persistentInteractionManager != null)
-            DontDestroyOnLoad(_persistentInteractionManager.gameObject);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // czy to ta minigierka?
+        // czy to scena minigierki?
         if (scene.name != minigameSceneName) return;
 
-        // usuń wszelkie nowe rigs/manager’y
-        foreach (var origin in FindObjectsOfType<XROrigin>())
-            if (origin != _persistentOrigin)
-                Destroy(origin.gameObject);
-
-        foreach (var mgr in FindObjectsOfType<XRInteractionManager>())
-            if (mgr != _persistentInteractionManager)
-                Destroy(mgr.gameObject);
-
-        // teleportuj persistentny rig
-        if (_persistentOrigin != null)
+        // znajdź nowy XR Origin w tej scenie
+        var xrOrigin = FindObjectOfType<XROrigin>();
+        if (xrOrigin == null)
         {
-            _persistentOrigin.transform.position    = spawnPosition;
-            _persistentOrigin.transform.eulerAngles = spawnEulerAngles;
+            Debug.LogError($"Wczytano '{scene.name}', ale nie znalazłem XROrigin!");
+            return;
         }
-        else Debug.LogError("Persistent XROrigin jest null!");
+
+        // teleportujemy nowy rig w minigierce
+        xrOrigin.transform.position    = spawnPosition;
+        xrOrigin.transform.eulerAngles = spawnEulerAngles;
     }
 }
