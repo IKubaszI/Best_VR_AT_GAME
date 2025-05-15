@@ -14,33 +14,25 @@ public class DiskSocketTeleporter : MonoBehaviour
     }
 
     private void OnEnable()
-    {
-        _socketInteractor.selectEntered.AddListener(OnDiskPlaced);
-    }
+        => _socketInteractor.selectEntered.AddListener(OnDiskPlaced);
 
     private void OnDisable()
-    {
-        _socketInteractor.selectEntered.RemoveListener(OnDiskPlaced);
-    }
+        => _socketInteractor.selectEntered.RemoveListener(OnDiskPlaced);
 
     private void OnDiskPlaced(SelectEnterEventArgs args)
     {
         var disk = args.interactableObject.transform.GetComponent<DiskSelector>();
         if (disk == null) return;
 
-        // Pobieramy singleton GameManager_Menu
         var gm = GameManager_Menu.Instance;
         if (gm == null)
         {
-            Debug.LogError("GameManager_Menu.Instance jest null! Sprawdź, czy masz w scenie obiekt z GameManager_Menu i DontDestroyOnLoad.");
+            Debug.LogError("GameManager_Menu.Instance jest null! Upewnij się, że masz w scenie obiekt z GameManager_Menu i DontDestroyOnLoad.");
             return;
         }
 
-        // Ustawiamy spawnPosition i spawnEulerAngles
         gm.spawnPosition    = disk.spawnPosition;
         gm.spawnEulerAngles = disk.spawnEulerAngles;
-
-        // Przeładowujemy główną scenę
         SceneManager.LoadScene(gm.mainSceneName);
     }
 }

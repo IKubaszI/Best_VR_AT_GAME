@@ -1,6 +1,8 @@
 // GameManager_Menu.cs
 using UnityEngine;
 using UnityEngine.SceneManagement;
+// potrzebne do XROrigin
+using Unity.XR.CoreUtils;
 
 public class GameManager_Menu : MonoBehaviour
 {
@@ -21,25 +23,23 @@ public class GameManager_Menu : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+        else Destroy(gameObject);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != mainSceneName) return;
+        if (scene.name != mainSceneName) 
+            return;
 
-        var player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        // Szukamy XR Origin
+        var xrOrigin = FindObjectOfType<XROrigin>();
+        if (xrOrigin != null)
         {
-            player.transform.position     = spawnPosition;
-            player.transform.eulerAngles  = spawnEulerAngles;
+            xrOrigin.transform.position    = spawnPosition;
+            xrOrigin.transform.eulerAngles = spawnEulerAngles;
+            return;
         }
-        else
-        {
-            Debug.LogError($"Wczytano scenę {mainSceneName}, ale nie znaleziono obiektu z tagiem 'Player'.");
-        }
+
+        Debug.LogError($"Wczytano {mainSceneName}, ale nie znalazłem XROrigin w scenie.");
     }
 }
