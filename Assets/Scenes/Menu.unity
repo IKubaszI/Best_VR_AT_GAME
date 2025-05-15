@@ -459,7 +459,6 @@ GameObject:
   - component: {fileID: 466244656}
   - component: {fileID: 466244655}
   - component: {fileID: 466244660}
-  - component: {fileID: 466244661}
   m_Layer: 0
   m_Name: DiskSocket
   m_TagString: Untagged
@@ -595,7 +594,7 @@ Transform:
   m_Children:
   - {fileID: 430187202}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &466244660
 MonoBehaviour:
@@ -609,21 +608,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4744479cf1d85f64492cf86933b5f243, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &466244661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 466244654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a953039a2467cd4d956a5c5d3f9307b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minigameSceneName: 
-  spawnPosition: {x: 0, y: 0, z: 0}
-  spawnEulerAngles: {x: 0, y: 0, z: 0}
 --- !u!1 &505578252
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,6 +1021,52 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1089307244
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1089307246}
+  - component: {fileID: 1089307245}
+  m_Layer: 0
+  m_Name: Disk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1089307245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089307244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a953039a2467cd4d956a5c5d3f9307b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minigameSceneName: 
+  teleportTargetId: 
+--- !u!4 &1089307246
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089307244}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.224, y: 1.05, z: -6.885}
+  m_LocalScale: {x: 0.27006826, y: 0.02828695, z: 0.27006826}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1167608048
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,8 +1248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minigameSceneName: ArcheryScene
-  spawnPosition: {x: 0, y: 0, z: 0}
-  spawnEulerAngles: {x: 0, y: 0, z: 0}
+  teleportTargetId: 1
 --- !u!114 &1360480303
 MonoBehaviour:
   m_ObjectHideFlags: 0
