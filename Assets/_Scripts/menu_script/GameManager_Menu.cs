@@ -1,4 +1,4 @@
-// GameManager_Menu.cs
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +12,10 @@ public class GameManager_Menu : MonoBehaviour
     [HideInInspector] public string minigameSceneName;
     [HideInInspector] public string teleportTargetId;
 
+    // referencja na komponent LoadingScreenManager (zgłoś w Inspectorze!)
+    [Header("Referencja do Loading Screen UI")]
+    public LoadingScreenManager loadingScreen;
+
     private void Awake()
     {
         if (Instance != null)
@@ -21,28 +25,66 @@ public class GameManager_Menu : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // canvasy i UI razem z GameManager są trwałe
+        DontDestroyOnLoad(loadingScreen.gameObject);
+
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    /// <summary>
+    /// Wywołaj zamiast SceneManager.LoadScene
+    /// </summary>
+    public void LoadMinigame()
+    {
+        StartCoroutine(LoadAsyncWithLoadingScreen(minigameSceneName));
+    }
+
+    private IEnumerator LoadAsyncWithLoadingScreen(string sceneName)
+    {
+        // 1) pokaż UI
+        loadingScreen.Show();
+
+        // 2) zacznij ładować asynchronicznie
+        var op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+        op.allowSceneActivation = false;
+
+        // 3) dopóki się ładuje, aktualizuj slider
+        while (!op.isDone)
+        {
+            // Unity raportuje progress do 0.9f, potem czeka na allowSceneActivation
+            float prog = Mathf.Clamp01(op.progress / 0.9f);
+            loadingScreen.SetProgress(prog);
+
+            // gdy wczytane w 90%, przepuść scenę
+            if (op.progress >= 0.9f)
+            {
+                op.allowSceneActivation = true;
+            }
+
+            yield return null;
+        }
+
+        // 4) ukryj UI
+        loadingScreen.Hide();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != minigameSceneName)
-            return;
+        if (scene.name != minigameSceneName) return;
 
-        // 1. Znajdź obiekt TeleportTarget o podanym ID
+        // odnajdź TeleportTarget
         var target = FindObjectsOfType<TeleportTarget>()
             .FirstOrDefault(t => t.targetId == teleportTargetId);
         if (target == null)
         {
-            Debug.LogError(
-                $"TeleportTarget o ID '{teleportTargetId}' nie znaleziono w scenie '{scene.name}'."
-            );
+            Debug.LogError($"TeleportTarget '{teleportTargetId}' nie znaleziono w '{scene.name}'");
             return;
         }
 
-        // 2. Spróbuj użyć XR-owego TeleportationProvider
-        var tpProvider = FindObjectOfType<TeleportationProvider>();
-        if (tpProvider != null)
+        // teleport XR-owo (jeśli masz TeleportationProvider) albo direct
+        var tp = FindObjectOfType<TeleportationProvider>();
+        if (tp != null)
         {
             var req = new TeleportRequest
             {
@@ -50,23 +92,18 @@ public class GameManager_Menu : MonoBehaviour
                 destinationRotation = target.transform.rotation,
                 matchOrientation    = MatchOrientation.TargetUpAndForward
             };
-            tpProvider.QueueTeleportRequest(req);
-            return;
+            tp.QueueTeleportRequest(req);
         }
-
-        // 3. Fallback: direct move + rotate (jeśli nie ma TPProvider)
-        var xrOrigin = FindObjectOfType<XROrigin>();
-        if (xrOrigin != null)
+        else
         {
-            xrOrigin.transform.SetPositionAndRotation(
-                target.transform.position,
-                target.transform.rotation
-            );
-            return;
+            var xrOrigin = FindObjectOfType<XROrigin>();
+            if (xrOrigin != null)
+                xrOrigin.transform.SetPositionAndRotation(
+                    target.transform.position,
+                    target.transform.rotation
+                );
+            else
+                Debug.LogError("Brak XROrigin – nie mogę teleportować.");
         }
-
-        Debug.LogError(
-            $"Brak TeleportationProvider i XROrigin w scenie '{scene.name}' – nie udało się teleportować."
-        );
     }
 }
