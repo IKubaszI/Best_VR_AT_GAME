@@ -1,15 +1,16 @@
+// GameManager_Menu.cs
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.XR.CoreUtils;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Teleportation; // tylko dla TeleportRequest
 
 public class GameManager_Menu : MonoBehaviour
 {
     public static GameManager_Menu Instance { get; private set; }
 
-    [HideInInspector] public string   minigameSceneName;
-    [HideInInspector] public string   teleportTargetId;
+    [HideInInspector] public string minigameSceneName;
+    [HideInInspector] public string teleportTargetId;
 
     private void Awake()
     {
@@ -28,20 +29,23 @@ public class GameManager_Menu : MonoBehaviour
         if (scene.name != minigameSceneName)
             return;
 
-        // 1) Znajdź pointa
+        // 1. Znajdź obiekt TeleportTarget o podanym ID
         var target = FindObjectsOfType<TeleportTarget>()
             .FirstOrDefault(t => t.targetId == teleportTargetId);
         if (target == null)
         {
-            Debug.LogError($"Nie znaleziono TeleportTarget o ID '{teleportTargetId}' w scenie '{scene.name}'");
+            Debug.LogError(
+                $"TeleportTarget o ID '{teleportTargetId}' nie znaleziono w scenie '{scene.name}'."
+            );
             return;
         }
 
-        // 2) Spróbuj teleportacji XR (ładnie obsłuży rotację i fade)
+        // 2. Spróbuj użyć XR-owego TeleportationProvider
         var tpProvider = FindObjectOfType<TeleportationProvider>();
         if (tpProvider != null)
         {
-            var req = new TeleportRequest {
+            var req = new TeleportRequest
+            {
                 destinationPosition = target.transform.position,
                 destinationRotation = target.transform.rotation,
                 matchOrientation    = MatchOrientation.TargetUpAndForward
@@ -50,7 +54,7 @@ public class GameManager_Menu : MonoBehaviour
             return;
         }
 
-        // 3) Fallback na bezpośrednie ustawienie, jeśli nie masz TeleportationProvider
+        // 3. Fallback: direct move + rotate (jeśli nie ma TPProvider)
         var xrOrigin = FindObjectOfType<XROrigin>();
         if (xrOrigin != null)
         {
@@ -61,6 +65,8 @@ public class GameManager_Menu : MonoBehaviour
             return;
         }
 
-        Debug.LogError("Brak TeleportationProvider i XROrigin – nie udało się teleportować!");
+        Debug.LogError(
+            $"Brak TeleportationProvider i XROrigin w scenie '{scene.name}' – nie udało się teleportować."
+        );
     }
 }
