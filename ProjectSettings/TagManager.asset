@@ -55,9 +55,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: loading
-    uniqueID: 1890210521
-    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: loading
+    uniqueID: 1890210521
     locked: 0
