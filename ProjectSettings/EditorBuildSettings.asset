@@ -5,12 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: b850f1dc009bd364b8aa9fe6f94bdbbb
   - enabled: 1
     path: Assets/Scenes/ArcheryScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
-    path: Assets/Free Pack Wooden Planks/New Scene.unity
-    guid: 8572cdaca7726a24ca81fa4bf44e1bb3
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 9f5881ba9a771c7418197e9754899a7f,
       type: 2}
