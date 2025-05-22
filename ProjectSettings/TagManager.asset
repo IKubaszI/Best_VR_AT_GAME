@@ -21,6 +21,11 @@ TagManager:
   - Ground
   - Katana
   - Magazine
+  - GasTank
+  - Target
+  - Metal
+  - Concrete
+  - ExplosiveBarrel
   layers:
   - Default
   - TransparentFX
@@ -35,8 +40,8 @@ TagManager:
   - Player
   - GrabInteractable
   - Disk
-  - 
-  - 
+  - Hand
+  - iner
   - 
   - 
   - 
