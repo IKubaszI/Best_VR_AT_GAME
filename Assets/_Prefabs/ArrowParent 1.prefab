@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 8099526184764957080}
   - component: {fileID: -8060293404626391046}
   m_Layer: 6
-  m_Name: ArrowParent
+  m_Name: ArrowParent 1
   m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
