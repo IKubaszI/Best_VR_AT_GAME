@@ -9,54 +9,57 @@ public class ArrowSocket : MonoBehaviour
     [Header("Prefab prawdziwej strzały")]
     [SerializeField] private GameObject arrowPrefab;
 
-    [Header("Punkt spawnu strzały")]
+    [Header("Punkt spawnu strzały (oś Z musi patrzeć tam, gdzie chcesz strzelać)")]
     [SerializeField] private Transform arrowSpawnPoint;
 
-    [Header("Maksymalna siła strzału")]
-    [SerializeField] private float arrowMaxSpeed = 10f;
+    [Header("Maksymalna prędkość przy strength = 1")]
+    [SerializeField] private float arrowMaxSpeed = 15f;
 
     private bool arrowNocked = false;
 
+    /* ---------- ładowanie strzały ---------- */
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Arrow") || arrowNocked)
-            return;
+        if (!other.CompareTag("Arrow") || arrowNocked) return;
 
-        XRGrabInteractable grabInteractable = other.GetComponent<XRGrabInteractable>();
-        if (grabInteractable != null && grabInteractable.isSelected)
+        if (other.TryGetComponent(out XRGrabInteractable grab) && grab.isSelected)
         {
-            var interactor = grabInteractable.firstInteractorSelecting as XRBaseInteractor;
-            if (interactor != null && interactor.interactionManager != null)
-                interactor.interactionManager.SelectExit(interactor, grabInteractable);
-
-            Destroy(grabInteractable.gameObject);
-
-            NockArrow();
+            var interactor = grab.firstInteractorSelecting as XRBaseInteractor;
+            interactor?.interactionManager.SelectExit(interactor, grab);
+            Destroy(grab.gameObject);                 // usuwamy placeholder z ręki
         }
-    }
 
-    public void NockArrow()
-    {
         midPointVisual.SetActive(true);
         arrowNocked = true;
-        Debug.Log("Strzała nałożona na cięciwę.");
     }
 
+    /* ---------- wystrzał; wywołuje BetterBowStringController.ResetBowString ---------- */
     public void ReleaseArrow(float strength)
+{
+    if (!arrowNocked) return;
+
+    midPointVisual.SetActive(false);
+    arrowNocked = false;
+
+    GameObject arrow = Instantiate(
+        arrowPrefab,
+        arrowSpawnPoint.position,
+        arrowSpawnPoint.rotation);
+
+    // KLUCZ: od razu obracamy i uruchamiamy rotację
+    arrow.transform.forward = arrowSpawnPoint.forward;
+
+    if (arrow.TryGetComponent(out Rigidbody rb))
     {
-        if (!arrowNocked)
-            return;
-
-        // Ukryj wizualną strzałę na cięciwie
-        midPointVisual.SetActive(false);
-        arrowNocked = false;
-
-        // Stwórz fizyczną strzałę
-        GameObject arrow = Instantiate(arrowPrefab, arrowSpawnPoint.position, midPointVisual.transform.rotation);
-        Rigidbody rb = arrow.GetComponent<Rigidbody>();
-        if (rb != null)
-            rb.AddForce(midPointVisual.transform.forward * strength * arrowMaxSpeed, ForceMode.Impulse);
-
-        Debug.Log("Wystrzelono strzałę z siłą: " + strength);
+        rb.velocity = rb.angularVelocity = Vector3.zero;
+        rb.AddForce(arrowSpawnPoint.forward * strength * arrowMaxSpeed, ForceMode.Impulse);
     }
+
+    // ► włączamy obracanie tylko na czas lotu
+    var rot = arrow.GetComponent<ArrowRotation>();
+    if (rot) rot.enabled = true;
+
+    Debug.Log($"Wystrzelono strzałę ({strength:0.00})");
+}
+
 }
